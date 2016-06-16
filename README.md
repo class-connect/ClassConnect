@@ -17,7 +17,7 @@ The following stories are **optional**:
 
 Here's a walkthrough of wireframes for user stories:
 
-[Wireframes](wireframes/index.html)
+[Wireframes](http://htmlpreview.github.com/?https://github.com/class-connect/ClassConnect/blob/master/wireframes/index.html)
 
 ## Notes
 
