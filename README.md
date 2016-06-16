@@ -17,7 +17,7 @@ The following stories are **optional**:
 
 Here's a walkthrough of wireframes for user stories:
 
-<img src='wireframes/index.html' title='Wireframe Walkthrough' width='' alt='Wireframe Walkthrough' />
+[Wireframes](wireframes/index.html)
 
 ## Notes
 
