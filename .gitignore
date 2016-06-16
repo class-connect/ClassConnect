@@ -48,6 +48,7 @@ local.properties
 
 # External tool builders
 .externalToolBuilders/
+.DS_Store
 
 # Locally stored "Eclipse launch configurations"
 *.launch
