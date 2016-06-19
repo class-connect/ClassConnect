@@ -1,12 +1,18 @@
 package com.codepath.classconnect.activities;
 
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.codepath.classconnect.R;
 import com.facebook.CallbackManager;
@@ -16,6 +22,9 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -38,6 +47,8 @@ public class LoginActivity extends AppCompatActivity {
 
         AppEventsLogger.activateApp(this);
 
+        validate();
+
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("email", "public_profile");
 
@@ -45,12 +56,13 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
                 Log.d("LOGIN", "Login Successful");
             }
 
             @Override
             public void onCancel() {
-
+                Log.e("LOGIN", "Login Canceled");
             }
 
             @Override
@@ -58,6 +70,27 @@ public class LoginActivity extends AppCompatActivity {
                 Log.e("LOGIN", "Login Failed", error);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void validate() {
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo("com.codepath.classconnect", PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String keyhash = Base64.encodeToString(md.digest(), Base64.DEFAULT);
+                Log.d("KeyHash:", keyhash);
+            }
+        }
+        catch (PackageManager.NameNotFoundException | NoSuchAlgorithmException e) {
+            Log.e("VALIDATION", "keyhash validation failed", e);
+        }
     }
 
     @Override
