@@ -68,6 +68,9 @@ Here's a walkthrough of wireframes for user stories:
 
 ## Notes
 
+## Credits
+
+Logo Made with <a href="http://logomakr.com" title="Logo Maker">Logo Maker</a>
 
 ## License
 
