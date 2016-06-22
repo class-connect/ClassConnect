@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ivTeacherImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:adjustViewBounds="true"
+        android:layout_alignParentTop="true"
+        android:nestedScrollingEnabled="true"
+        android:layout_margin="5dp"
+        android:src="@android:color/holo_red_dark" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvKlassName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            style="@style/TextStyle.Bold"
+            android:layout_toRightOf="@id/ivTeacherImage"
+            tools:text="Music Class" />
+
+        <TextView
+            android:id="@+id/tvTeacherName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/ivTeacherImage"
+            android:layout_below="@id/tvKlassName"
+            style="@style/TextStyle.Small"
+            tools:text="Ms. Johnson"
+            android:paddingTop="5dp" />
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="2dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextStyle.Small"
+                tools:text="Friday"
+                android:id="@+id/tvDaysOfWeek"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextStyle.Small"
+                tools:text="10:30 AM"
+                android:id="@+id/tvStartTime"
+                android:paddingEnd="10dp"
+                android:paddingRight="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextStyle.Small"
+                tools:text="11:30 AM"
+                android:id="@+id/tvEndTime" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

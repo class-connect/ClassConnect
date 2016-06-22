@@ -12,6 +12,8 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.codepath.classconnect.R;
@@ -56,7 +58,9 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                //Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+
+                launchClassView();
                 Log.d("LOGIN", "Login Successful");
             }
 
@@ -113,5 +117,19 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onClick(View v) {
+        Button fb = (Button) findViewById(R.id.fb);
+        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+        if (v == fb) {
+            loginButton.performClick();
+        }
+    }
+
+    public void launchClassView() {
+        // first parameter is the context, second is the class of the activity to launch
+        Intent i = new Intent(LoginActivity.this, ClassActivity.class);
+        startActivity(i); // brings up the second activity
     }
 }

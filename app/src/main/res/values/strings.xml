@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">ClassConnect</string>
+    <string name="app_label">Class Connect</string>
     <string name="action_settings">Settings</string>
     <string name="facebook_app_id">1738218399792408</string>
+    <string name="title_activity_class">ClassActivity</string>
+    <string name="classes">Classes</string>
+    <string name="add_class">Add Class</string>
+    <string name="add_student">Add Student</string>
 </resources>
