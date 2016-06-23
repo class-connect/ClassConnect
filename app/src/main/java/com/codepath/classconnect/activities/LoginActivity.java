@@ -12,13 +12,15 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.codepath.classconnect.R;
+import com.codepath.classconnect.UserManager;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -30,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
 
     CallbackManager callbackManager;
     LoginButton loginButton;
+    ProfileTracker profileTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +59,18 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
-                Log.d("LOGIN", "Login Successful");
+                if (Profile.getCurrentProfile() == null) {
+                    profileTracker = new ProfileTracker() {
+                        @Override
+                        protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
+                            profileTracker.stopTracking();
+                            UserManager.setCurrentUser();
+                        }
+                    };
+                }
+                else {
+                    UserManager.setCurrentUser();
+                }
             }
 
             @Override
@@ -70,6 +83,11 @@ public class LoginActivity extends AppCompatActivity {
                 Log.e("LOGIN", "Login Failed", error);
             }
         });
+
+        // if already logged in, none of the events will fire
+        if (Profile.getCurrentProfile() != null) {
+            UserManager.setCurrentUser();
+        }
     }
 
     @Override
@@ -87,8 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                 String keyhash = Base64.encodeToString(md.digest(), Base64.DEFAULT);
                 Log.d("KeyHash:", keyhash);
             }
-        }
-        catch (PackageManager.NameNotFoundException | NoSuchAlgorithmException e) {
+        } catch (PackageManager.NameNotFoundException | NoSuchAlgorithmException e) {
             Log.e("VALIDATION", "keyhash validation failed", e);
         }
     }

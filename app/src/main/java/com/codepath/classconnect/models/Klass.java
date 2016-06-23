@@ -1,77 +1,77 @@
 package com.codepath.classconnect.models;
 
-import org.parceler.Parcel;
-
-import java.util.Date;
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
 
 /**
  * Created by ssunda1 on 6/20/16.
  */
-@Parcel
-public class Klass {
+@ParseClassName("Klass")
+public class Klass extends ParseObject {
 
-    private String name;
-    private Date startTime;
-    private Date endTime;
-    private String daysOfWeek;
-    private String description;
-
-    private String teacherName;
-    private String profileUrl;
+    public static String KEY_NAME = "name";
+    public static String KEY_START_TIME = "startTime";
+    public static String KEY_END_TIME = "endTime";
+    public static String KEY_DAYS_OF_WEEK = "daysOfWeek";
+    public static String KEY_DESCRIPTION = "description";
+    public static String KEY_TEACHER = "teacher";
 
     public String getName() {
-        return name;
+        return getString(KEY_NAME);
     }
 
     public void setName(String name) {
-        this.name = name;
+        put(KEY_NAME, name);
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public String getStartTime() {
+        return getString(KEY_START_TIME);
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setStartTime(String startTime) {
+        put(KEY_START_TIME, startTime);
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public String getEndTime() {
+        return getString(KEY_END_TIME);
     }
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+    public void setEndTime(String endTime) {
+        put(KEY_END_TIME, endTime);
     }
 
     public String getDaysOfWeek() {
-        return daysOfWeek;
+        return getString(KEY_DAYS_OF_WEEK);
     }
 
     public void setDaysOfWeek(String daysOfWeek) {
-        this.daysOfWeek = daysOfWeek;
+        put(KEY_DAYS_OF_WEEK, daysOfWeek);
     }
 
     public String getDescription() {
-        return description;
+        return getString(KEY_DESCRIPTION);
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        put(KEY_DESCRIPTION, description);
+    }
+
+    public AppUser getTeacher() {
+        return (AppUser) getParseObject(KEY_TEACHER);
+    }
+
+    public void setTeacher(AppUser teacher) {
+        put(KEY_TEACHER, teacher);
     }
 
     public String getTeacherName() {
-        return teacherName;
-    }
-
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName;
+        AppUser teacher = getTeacher();
+        return teacher != null ? teacher.getName() : null;
     }
 
     public String getProfileUrl() {
-        return profileUrl;
+        AppUser teacher = getTeacher();
+        return teacher != null ? teacher.getProfileUrl() : null;
     }
 
-    public void setProfileUrl(String profileUrl) {
-        this.profileUrl = profileUrl;
-    }
 }
