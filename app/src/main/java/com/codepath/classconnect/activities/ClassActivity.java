@@ -1,6 +1,9 @@
 package com.codepath.classconnect.activities;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -107,6 +110,34 @@ public class ClassActivity extends AppCompatActivity {
     }
 
     private void populateData() {
+        final ProgressDialog dialog = new ProgressDialog(this);
+
+        new AsyncTask<Void, Void, Void>() {
+
+            @Override
+            protected void onPreExecute() {
+                dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                dialog.setMessage("Loading. Please wait...");
+                dialog.setIndeterminate(true);
+                dialog.setCanceledOnTouchOutside(false);
+                dialog.show();
+            }
+
+            @Override
+            protected  Void doInBackground(Void... params) {
+                fetchData();
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void args) {
+                dialog.dismiss();
+            }
+        }.execute();
+
+    }
+
+    private void fetchData() {
         AppUser user = UserManager.getCurrentUser();
         if (user == null) {
             final Profile profile = Profile.getCurrentProfile();
