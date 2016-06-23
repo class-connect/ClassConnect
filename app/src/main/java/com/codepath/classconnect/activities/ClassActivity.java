@@ -12,15 +12,24 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.codepath.classconnect.R;
+import com.codepath.classconnect.UserManager;
 import com.codepath.classconnect.adapters.ClassAdapter;
-import com.codepath.classconnect.models.Klass;
+import com.codepath.classconnect.models.AppUser;
+import com.codepath.classconnect.models.KlassRegistration;
+import com.facebook.Profile;
+import com.parse.FindCallback;
+import com.parse.ParseException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ClassActivity extends AppCompatActivity {
-    ListView lvKlasses;
-    ArrayList<Klass> klasses = new ArrayList<Klass>();
-    ClassAdapter klassAdapter;
+
+    private static final int REQUEST_CODE = 101;
+
+    private ListView lvKlasses;
+    private ArrayList<KlassRegistration> klasses = new ArrayList<>();
+    private ClassAdapter klassAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +95,50 @@ public class ClassActivity extends AppCompatActivity {
 
     private void addNewClass() {
         Intent i = new Intent(this, NewClassActivity.class);
-        startActivity(i);
+        startActivityForResult(i, REQUEST_CODE);
         overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            populateData();
+        }
+    }
 
     private void populateData() {
-
+        AppUser user = UserManager.getCurrentUser();
+        if (user == null) {
+            final Profile profile = Profile.getCurrentProfile();
+            if (profile != null) {
+                AppUser.findByUserId(profile.getId(), new FindCallback<AppUser>() {
+                    @Override
+                    public void done(List<AppUser> objects, ParseException e) {
+                        if (e == null && objects != null && !objects.isEmpty()) {
+                            KlassRegistration.findAll(objects.get(0), new FindCallback<KlassRegistration>() {
+                                @Override
+                                public void done(List<KlassRegistration> objects, ParseException e) {
+                                    if (e == null) {
+                                        klassAdapter.clear();
+                                        klassAdapter.addAll(objects);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        }
+        else {
+            KlassRegistration.findAll(user, new FindCallback<KlassRegistration>() {
+                @Override
+                public void done(List<KlassRegistration> objects, ParseException e) {
+                    if (e == null) {
+                        klassAdapter.clear();
+                        klassAdapter.addAll(objects);
+                    }
+                }
+            });
+        }
     }
 }

@@ -1,7 +1,9 @@
 package com.codepath.classconnect.models;
 
+import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 /**
  * Created by ssunda1 on 6/20/16.
@@ -72,6 +74,14 @@ public class Klass extends ParseObject {
     public String getProfileUrl() {
         AppUser teacher = getTeacher();
         return teacher != null ? teacher.getProfileUrl() : null;
+    }
+
+    public static void find(String teacher, String code, FindCallback<Klass> callback) {
+        ParseQuery<Klass> query = ParseQuery.getQuery(Klass.class);
+        query.whereEqualTo("objectId", code);
+        //query.whereEqualTo("teacher.name", teacher);
+        query.include(KEY_TEACHER);
+        query.findInBackground(callback);
     }
 
 }

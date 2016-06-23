@@ -9,4 +9,36 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.codepath.classconnect.activities.NewStudentActivity">
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etFirstName"
+        android:hint="@string/first_name"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="66dp"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etLastName"
+        android:hint="@string/last_name"
+        android:layout_below="@+id/etFirstName"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_save"
+        android:id="@+id/btSave"
+        android:onClick="saveStudent"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
 </RelativeLayout>

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.codepath.classconnect.R;
 import com.codepath.classconnect.models.Klass;
+import com.codepath.classconnect.models.KlassRegistration;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 /**
  * Created by adeshpa on 6/22/16.
  */
-public class ClassAdapter extends ArrayAdapter<Klass> {
+public class ClassAdapter extends ArrayAdapter<KlassRegistration> {
     Context m_context;
 
     // View lookup cache
@@ -32,7 +33,7 @@ public class ClassAdapter extends ArrayAdapter<Klass> {
         TextView tvDaysOfWeek;
     }
 
-    public ClassAdapter(Context context, ArrayList<Klass> movies) {
+    public ClassAdapter(Context context, ArrayList<KlassRegistration> movies) {
         super(context, R.layout.item_klass, movies);
         m_context = context;
     }
@@ -40,7 +41,8 @@ public class ClassAdapter extends ArrayAdapter<Klass> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        Klass klass = getItem(position);
+        KlassRegistration kr = getItem(position);
+        Klass klass = kr.getKlass();
         // Check if an existing view is being reused, otherwise inflate the view
         ViewHolder viewHolder; // view lookup cache stored in tag
         if (convertView == null) {

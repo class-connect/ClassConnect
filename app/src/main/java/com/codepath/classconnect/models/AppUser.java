@@ -17,7 +17,7 @@ public class AppUser extends ParseObject {
     public static String KEY_ID = "userId";
     public static String KEY_NAME = "name";
     public static String KEY_PROFILE_URL = "profileUrl";
-    public static String KEY_KLASSES = "classes";
+    public static String KEY_STUDENTS = "students";
 
     public String getUserId() {
         return getString(KEY_ID);
@@ -43,21 +43,24 @@ public class AppUser extends ParseObject {
         put(KEY_PROFILE_URL, profileUrl);
     }
 
-    public void addKlass(Klass klass) {
-        List<Object> klasses = getList(KEY_KLASSES);
-        klasses.add(klass);
+    public void addStudent(Student student) {
+        add(KEY_STUDENTS, student);
+    }
+
+    public List<Student> getStudents() {
+        return getList(KEY_STUDENTS);
     }
 
     public static void findByObjectId(String objectId, GetCallback<AppUser> callback) {
         ParseQuery<AppUser> query = ParseQuery.getQuery(AppUser.class);
-        query.include(KEY_KLASSES);
+        query.include(KEY_STUDENTS);
         query.getInBackground(objectId, callback);
     }
 
     public static void findByUserId(String userId, FindCallback<AppUser> callback) {
         ParseQuery<AppUser> query = ParseQuery.getQuery(AppUser.class);
         query.whereEqualTo(KEY_ID, userId);
-        query.include(KEY_KLASSES);
+        query.include(KEY_STUDENTS);
         query.findInBackground(callback);
     }
 }

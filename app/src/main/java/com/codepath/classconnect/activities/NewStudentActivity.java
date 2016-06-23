@@ -3,15 +3,28 @@ package com.codepath.classconnect.activities;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 import com.codepath.classconnect.R;
+import com.codepath.classconnect.UserManager;
+import com.codepath.classconnect.models.AppUser;
+import com.codepath.classconnect.models.Student;
+import com.parse.ParseException;
+import com.parse.SaveCallback;
 
 public class NewStudentActivity extends AppCompatActivity {
+
+    private EditText etFirstName;
+    private EditText etLastName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_student);
+
+        etFirstName = (EditText) findViewById(R.id.etFirstName);
+        etLastName = (EditText) findViewById(R.id.etLastName);
 
         android.support.v7.app.ActionBar menu = getSupportActionBar();
         menu.setTitle(R.string.add_student);
@@ -48,5 +61,20 @@ public class NewStudentActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void saveStudent(View view) {
+        Student student = new Student();
+        student.setFirstName(etFirstName.getText().toString());
+        student.setLastName(etLastName.getText().toString());
+        AppUser parent = UserManager.getCurrentUser();
+        parent.addStudent(student);
+        parent.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                UserManager.refreshCurrentUser();
+            }
+        });
+        finish();
     }
 }

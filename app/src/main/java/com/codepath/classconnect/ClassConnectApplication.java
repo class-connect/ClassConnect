@@ -4,6 +4,9 @@ import android.app.Application;
 
 import com.codepath.classconnect.models.AppUser;
 import com.codepath.classconnect.models.Klass;
+import com.codepath.classconnect.models.KlassRegistration;
+import com.codepath.classconnect.models.Message;
+import com.codepath.classconnect.models.Student;
 import com.parse.Parse;
 import com.parse.ParseObject;
 import com.parse.interceptors.ParseLogInterceptor;
@@ -19,6 +22,9 @@ public class ClassConnectApplication extends Application {
 
         ParseObject.registerSubclass(AppUser.class);
         ParseObject.registerSubclass(Klass.class);
+        ParseObject.registerSubclass(Student.class);
+        ParseObject.registerSubclass(Message.class);
+        ParseObject.registerSubclass(KlassRegistration.class);
 
         Parse.enableLocalDatastore(getApplicationContext());
 

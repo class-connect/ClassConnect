@@ -3,6 +3,7 @@ package com.codepath.classconnect;
 import com.codepath.classconnect.models.AppUser;
 import com.facebook.Profile;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.SaveCallback;
 
@@ -57,4 +58,16 @@ public class UserManager {
             });
         }
     }
+
+    public static void refreshCurrentUser() {
+        if (currentUser != null) {
+            AppUser.findByObjectId(currentUser.getObjectId(), new GetCallback<AppUser>() {
+                @Override
+                public void done(AppUser object, ParseException e) {
+                    currentUser = object;
+                }
+            });
+        }
+    }
+
 }

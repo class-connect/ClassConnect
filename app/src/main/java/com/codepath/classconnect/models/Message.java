@@ -1,9 +1,13 @@
 package com.codepath.classconnect.models;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
 /**
  * Created by ssunda1 on 6/20/16.
  */
-public class Message {
+@ParseClassName("Message")
+public class Message extends ParseObject {
 
     private String id;
     private String body;
