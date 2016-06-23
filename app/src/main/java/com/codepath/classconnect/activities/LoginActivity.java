@@ -66,14 +66,14 @@ public class LoginActivity extends AppCompatActivity {
                         protected void onCurrentProfileChanged(Profile profile, Profile profile2) {
                             profileTracker.stopTracking();
                             UserManager.setCurrentUser();
+                            launchClassView();
                         }
                     };
                 }
                 else {
                     UserManager.setCurrentUser();
+                    launchClassView();
                 }
-
-                launchClassView();
             }
 
             @Override
