@@ -1,11 +1,8 @@
 package com.codepath.classconnect.models;
 
-import org.parceler.Parcel;
-
 /**
  * Created by ssunda1 on 6/20/16.
  */
-@Parcel
 public class Message {
 
     private String id;

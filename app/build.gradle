@@ -52,4 +52,5 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.parse:parse-android:1.13.0'
     compile 'com.parse:parseinterceptors:0.0.2'
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
 }
