@@ -11,12 +11,12 @@ import com.parse.ParseQuery;
 @ParseClassName("Klass")
 public class Klass extends ParseObject {
 
-    public static String KEY_NAME = "name";
-    public static String KEY_START_TIME = "startTime";
-    public static String KEY_END_TIME = "endTime";
-    public static String KEY_DAYS_OF_WEEK = "daysOfWeek";
-    public static String KEY_DESCRIPTION = "description";
-    public static String KEY_TEACHER = "teacher";
+    public static final String KEY_NAME = "name";
+    public static final String KEY_START_TIME = "startTime";
+    public static final String KEY_END_TIME = "endTime";
+    public static final String KEY_DAYS_OF_WEEK = "daysOfWeek";
+    public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_TEACHER = "teacher";
 
     public String getName() {
         return getString(KEY_NAME);
@@ -76,10 +76,16 @@ public class Klass extends ParseObject {
         return teacher != null ? teacher.getProfileUrl() : null;
     }
 
-    public static void find(String teacher, String code, FindCallback<Klass> callback) {
+    public static void findByObjectId(String objectId, FindCallback<Klass> callback) {
+        ParseQuery<Klass> query = ParseQuery.getQuery(Klass.class);
+        query.whereEqualTo("objectId", objectId);
+        query.include(KEY_TEACHER);
+        query.findInBackground(callback);
+    }
+
+    public static void findByCode(String code, FindCallback<Klass> callback) {
         ParseQuery<Klass> query = ParseQuery.getQuery(Klass.class);
         query.whereEqualTo("objectId", code);
-        //query.whereEqualTo("teacher.name", teacher);
         query.include(KEY_TEACHER);
         query.findInBackground(callback);
     }

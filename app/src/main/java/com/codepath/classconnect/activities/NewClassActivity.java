@@ -70,10 +70,9 @@ public class NewClassActivity extends AppCompatActivity {
     }
 
     public void addClass(View view) {
-        String teacher = etTeacherName.getText().toString();
         final String student = etStudentName.getText().toString();
         String code = etCode.getText().toString();
-        Klass.find(teacher, code, new FindCallback<Klass>() {
+        Klass.findByCode(code, new FindCallback<Klass>() {
             @Override
             public void done(List<Klass> objects, ParseException e) {
                 if (e == null) {

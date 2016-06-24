@@ -14,10 +14,10 @@ import java.util.List;
 @ParseClassName("AppUser")
 public class AppUser extends ParseObject {
 
-    public static String KEY_ID = "userId";
-    public static String KEY_NAME = "name";
-    public static String KEY_PROFILE_URL = "profileUrl";
-    public static String KEY_STUDENTS = "students";
+    public static final String KEY_ID = "userId";
+    public static final String KEY_NAME = "name";
+    public static final String KEY_PROFILE_URL = "profileUrl";
+    public static final String KEY_STUDENTS = "students";
 
     public String getUserId() {
         return getString(KEY_ID);

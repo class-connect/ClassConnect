@@ -9,8 +9,8 @@ import com.parse.ParseObject;
 @ParseClassName("Student")
 public class Student extends ParseObject {
 
-    public static String KEY_FIRST_NAME = "firstName";
-    public static String KEY_LAST_NAME = "lastName";
+    public static final String KEY_FIRST_NAME = "firstName";
+    public static final String KEY_LAST_NAME = "lastName";
 
     public String getFirstName() {
         return getString(KEY_FIRST_NAME);

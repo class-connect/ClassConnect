@@ -11,10 +11,10 @@ import com.parse.ParseQuery;
 @ParseClassName("KlassRegistration")
 public class KlassRegistration extends ParseObject {
 
-    public static String KEY_KLASS = "klass";
-    public static String KEY_OWNER = "owner";
-    public static String KEY_TEACHER_NAME = "teacherName";
-    public static String KEY_STUDENT_NAME = "studentName";
+    public static final String KEY_KLASS = "klass";
+    public static final String KEY_OWNER = "owner";
+    public static final String KEY_TEACHER_NAME = "teacherName";
+    public static final String KEY_STUDENT_NAME = "studentName";
 
     public Klass getKlass() {
         return (Klass) getParseObject(KEY_KLASS);

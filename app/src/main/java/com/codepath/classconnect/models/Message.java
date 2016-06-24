@@ -1,7 +1,13 @@
 package com.codepath.classconnect.models;
 
+import android.text.format.DateUtils;
+
+import com.parse.FindCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.Date;
 
 /**
  * Created by ssunda1 on 6/20/16.
@@ -9,68 +15,70 @@ import com.parse.ParseObject;
 @ParseClassName("Message")
 public class Message extends ParseObject {
 
-    private String id;
-    private String body;
-    private String url;
-    private String type;
+    public static final String KEY_KLASS = "klass";
+    public static final String KEY_USER = "user";
+    public static final String KEY_BODY = "body";
+    public static final String KEY_CREATED_AT = "createdAt";
 
-    private String userId;
-    private String userName;
-    private String userProfileUrl;
-
-    public String getId() {
-        return id;
+    public Klass getKlass() {
+        return (Klass) getParseObject(KEY_KLASS);
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setKlass(Klass klass) {
+        put(KEY_KLASS, klass);
+    }
+
+    public AppUser getUser() {
+        return (AppUser) getParseObject(KEY_USER);
+    }
+
+    public void setUser(AppUser user) {
+        put(KEY_USER, user);
     }
 
     public String getBody() {
-        return body;
+        return getString(KEY_BODY);
     }
 
     public void setBody(String body) {
-        this.body = body;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
+        put(KEY_BODY, body);
     }
 
     public String getUserName() {
-        return userName;
+        AppUser user = getUser();
+        return user != null ? user.getName() : null;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String getProfileUrl() {
+        AppUser user = getUser();
+        return user != null ? user.getProfileUrl() : null;
     }
 
-    public String getUserProfileUrl() {
-        return userProfileUrl;
+    public String getRelativeTime() {
+        Date date = getDate(KEY_CREATED_AT);
+        long now = System.currentTimeMillis();
+        String relativeDate = DateUtils.getRelativeTimeSpanString(date.getTime(), now, DateUtils.SECOND_IN_MILLIS).toString();
+        return formatRelativeDate(relativeDate);
     }
 
-    public void setUserProfileUrl(String userProfileUrl) {
-        this.userProfileUrl = userProfileUrl;
+    private String formatRelativeDate(String date) {
+        String[] split = date.split(" ");
+        if (split.length == 3) {
+            String unit = split[1];
+            if (unit.startsWith("second") || unit.startsWith("minute") || unit.startsWith("hour") || unit.startsWith("day")) {
+                return split[0] + unit.charAt(0);
+            }
+        }
+        return date;
     }
+
+    public static void findAll(Klass klass, FindCallback<Message> callback) {
+        ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
+        query.whereEqualTo(KEY_KLASS, klass);
+        query.include(KEY_KLASS);
+        query.include(KEY_USER);
+        query.orderByDescending("createdAt");
+        query.findInBackground(callback);
+    }
+
 }
