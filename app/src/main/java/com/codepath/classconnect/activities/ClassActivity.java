@@ -114,12 +114,6 @@ public class ClassActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
             return true;
         }
-        if (id == R.id.action_addEvent) {
-            Intent i = new Intent(this, NewEventActivity.class);
-            startActivity(i);
-            overridePendingTransition(R.anim.right_in, R.anim.left_out);
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }

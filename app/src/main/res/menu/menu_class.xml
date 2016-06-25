@@ -24,14 +24,4 @@
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_add_student"
         android:title="@string/add_student" />
-
-    <!-- This is for testing -->
-    <item
-        android:id="@+id/action_addEvent"
-        android:orderInCategory="3"
-        android:layout_width="46dp"
-        android:layout_height="56dp"
-        android:layout_gravity="right"
-        app:showAsAction="ifRoom"
-        android:title="@string/add_event" />
 </menu>

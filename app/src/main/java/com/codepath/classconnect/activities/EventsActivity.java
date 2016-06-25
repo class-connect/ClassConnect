@@ -86,6 +86,11 @@ public class EventsActivity extends AppCompatActivity {
                 Intent i = new Intent(this,PostTweets.class);
                 startActivityForResult(i, REQUEST_CODE);
                 return true;*/
+            case R.id.action_addEvent:
+                Intent i = new Intent(this, NewEventActivity.class);
+                startActivity(i);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                return true;
 
             case R.id.home:
                 finish();
