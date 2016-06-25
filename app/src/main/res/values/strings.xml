@@ -7,10 +7,18 @@
     <string name="classes">Classes</string>
     <string name="add_class">Add Class</string>
     <string name="add_student">Add Student</string>
+    <string name="add_event">New Event</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="label_save">SAVE</string>
     <string name="teacher_name">Teacher\'s Name</string>
     <string name="student_name">Student\'s Name</string>
     <string name="class_code">Class Secret Code</string>
+    <string name="hint_event_name">Event Name</string>
+    <string name="hint_start_date">Start Date</string>
+    <string name="hint_start_time">Start Time</string>
+    <string name="hint_end_date">End Date</string>
+    <string name="hint_end_time">End Time</string>
+    <string name="hint_notes">Notes</string>
+    <string name="hint_location">Location</string>
 </resources>

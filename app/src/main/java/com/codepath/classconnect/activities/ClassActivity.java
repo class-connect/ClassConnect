@@ -1,6 +1,5 @@
 package com.codepath.classconnect.activities;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -88,6 +87,12 @@ public class ClassActivity extends AppCompatActivity {
         }
         if (id == R.id.action_addStudent) {
             Intent i = new Intent(this, NewStudentActivity.class);
+            startActivity(i);
+            overridePendingTransition(R.anim.right_in, R.anim.left_out);
+            return true;
+        }
+        if (id == R.id.action_addEvent) {
+            Intent i = new Intent(this, NewEventActivity.class);
             startActivity(i);
             overridePendingTransition(R.anim.right_in, R.anim.left_out);
             return true;

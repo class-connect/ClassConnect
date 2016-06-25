@@ -1,6 +1,7 @@
 package com.codepath.classconnect.models;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -76,11 +77,10 @@ public class Klass extends ParseObject {
         return teacher != null ? teacher.getProfileUrl() : null;
     }
 
-    public static void findByObjectId(String objectId, FindCallback<Klass> callback) {
+    public static void findByObjectId(String objectId, GetCallback<Klass> callback) {
         ParseQuery<Klass> query = ParseQuery.getQuery(Klass.class);
-        query.whereEqualTo("objectId", objectId);
         query.include(KEY_TEACHER);
-        query.findInBackground(callback);
+        query.getInBackground(objectId, callback);
     }
 
     public static void findByCode(String code, FindCallback<Klass> callback) {

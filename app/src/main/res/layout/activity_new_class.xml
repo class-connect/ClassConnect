@@ -9,43 +9,66 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.codepath.classconnect.activities.NewClassActivity">
 
-    <EditText
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/teacherNameWrapper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/etTeacherName"
-        android:hint="@string/teacher_name"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20dp"
         android:layout_marginTop="66dp"
-        android:layout_marginBottom="20dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:hint="@string/teacher_name"
+        >
 
-    <EditText
+        <EditText
+            android:id="@+id/etTeacherName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/studentNameWrapper"
+        android:layout_below="@+id/teacherNameWrapper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/etStudentName"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20dp"
         android:hint="@string/student_name"
-        android:layout_below="@+id/etTeacherName"
-        android:layout_marginBottom="20dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        >
 
-    <EditText
+        <EditText
+            android:id="@+id/etStudentName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/codeNameWrapper"
+        android:layout_below="@+id/studentNameWrapper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/etCodeName"
-        android:inputType="textPassword"
-        android:hint="@string/class_code"
-        android:layout_below="@+id/etStudentName"
-        android:layout_marginBottom="20dp"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="20dp"
+        android:hint="@string/class_code"
+        >
+
+        <EditText
+            android:id="@+id/etCodeName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPassword"
+            />
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:layout_width="wrap_content"
@@ -53,7 +76,7 @@
         android:text="@string/label_save"
         android:id="@+id/btSave"
         android:onClick="addClass"
-        android:layout_below="@+id/etCodeName"
+        android:layout_below="@+id/codeNameWrapper"
         android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

@@ -3,6 +3,7 @@ package com.codepath.classconnect;
 import android.app.Application;
 
 import com.codepath.classconnect.models.AppUser;
+import com.codepath.classconnect.models.Event;
 import com.codepath.classconnect.models.Klass;
 import com.codepath.classconnect.models.KlassRegistration;
 import com.codepath.classconnect.models.Message;
@@ -24,6 +25,7 @@ public class ClassConnectApplication extends Application {
         ParseObject.registerSubclass(Klass.class);
         ParseObject.registerSubclass(Student.class);
         ParseObject.registerSubclass(Message.class);
+        ParseObject.registerSubclass(Event.class);
         ParseObject.registerSubclass(KlassRegistration.class);
 
         Parse.enableLocalDatastore(getApplicationContext());
