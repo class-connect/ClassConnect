@@ -21,4 +21,8 @@
     <string name="hint_end_time">End Time</string>
     <string name="hint_notes">Notes</string>
     <string name="hint_location">Location</string>
+    <string name="message_hint">Say Anything</string>
+    <string name="send">Send</string>
+    <string name="profile_me">My Profile Pic</string>
+    <string name="profile_other">Other profile pic</string>
 </resources>
