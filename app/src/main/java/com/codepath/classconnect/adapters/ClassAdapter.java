@@ -1,90 +1,181 @@
 package com.codepath.classconnect.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.classconnect.R;
+import com.codepath.classconnect.activities.ClassDetailsActivity;
+import com.codepath.classconnect.activities.EventsActivity;
+import com.codepath.classconnect.models.Event;
 import com.codepath.classconnect.models.Klass;
 import com.codepath.classconnect.models.KlassRegistration;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 /**
  * Created by adeshpa on 6/22/16.
  */
-public class ClassAdapter extends ArrayAdapter<KlassRegistration> {
+public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> {
+        //ArrayAdapter<KlassRegistration> {
+    private final static int FADE_DURATION = 1000; // in milliseconds
     Context m_context;
+    // Store a member variable for the contacts
+    private List<KlassRegistration> mClasses;
+    private View contactView;
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+
+        // Inflate the custom layout
+        contactView = inflater.inflate(R.layout.item_klass, parent, false);
+
+        // Return a new holder instance
+        ViewHolder viewHolder = new ViewHolder(contactView, this);
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
+        // Get the data item for this position
+        KlassRegistration kr = mClasses.get(position);
+        final Klass klass = kr.getKlass();
+
+        // Set item views based on your views and data mode
+        TextView tvKlassName = viewHolder.tvKlassName;
+        if (tvKlassName != null) {
+            tvKlassName.setText(klass.getName());
+        }
+
+        TextView tvTeacherName = viewHolder.tvTeacherName;
+        if (tvTeacherName != null) {
+            tvTeacherName.setText(klass.getTeacherName());
+        }
+
+        TextView tvStartTime = viewHolder.tvStartTime;
+        if (tvStartTime != null) {
+            tvStartTime.setText(klass.getStartTime());
+        }
+
+        TextView tvEndTime = viewHolder.tvEndTime;
+        if (tvEndTime != null) {
+            tvEndTime.setText(klass.getEndTime());
+        }
+
+        TextView tvDaysOfWeek = viewHolder.tvDaysOfWeek;
+        if (tvDaysOfWeek != null) {
+            tvDaysOfWeek.setText(klass.getDaysOfWeek());
+        }
+
+        ImageView ivTeacherImage = viewHolder.teacherImage;
+        if (ivTeacherImage != null) {
+            Picasso.with(m_context)
+                    .load(klass.getProfileUrl())
+                    .transform(new RoundedCornersTransformation(2, 2))
+                    .error(R.drawable.progress_animation)
+                    .placeholder(R.drawable.progress_animation)
+                    .into(ivTeacherImage);
+
+            ivTeacherImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //Toast.makeText(v.getContext(), "Show Teachers Details here", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(v.getContext(), ClassDetailsActivity.class);
+                    intent.putExtra("KlassDesc", "This is new class starting on Friday");
+                    v.getContext().startActivity(intent);
+                    // Here you apply the animation when the view is bound
+                    setAnimation(viewHolder.teacherImage, position);
+                }
+
+            });
+        }
+
+        // Set the view to fade in
+        setFadeAnimation(viewHolder.itemView);
+    }
+
+    private void setFadeAnimation(View view) {
+        AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(FADE_DURATION);
+        view.startAnimation(anim);
+    }
+
+    /**
+     * Here is the key method to apply the animation
+     */
+    private void setAnimation(View viewToAnimate, int position)
+    {
+        // If the bound view wasn't previously displayed on screen, it's animated
+        Animation animation = AnimationUtils.loadAnimation(m_context, android.R.anim.slide_in_left);
+        viewToAnimate.startAnimation(animation);
+    }
+
+    @Override
+    public int getItemCount() {
+        return mClasses.size();
+    }
+
+    public void clear() {
+        mClasses.clear();
+    }
+
+    public void addAll(List<KlassRegistration> objects) {
+        mClasses.addAll(objects);
+    }
 
     // View lookup cache
-    private static class ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements
+            View.OnClickListener {
         ImageView teacherImage;
         TextView tvKlassName;
         TextView tvTeacherName;
         TextView tvStartTime;
         TextView tvEndTime;
         TextView tvDaysOfWeek;
+
+        public ViewHolder(final View itemView, ClassAdapter classAdapter) {
+            super(itemView);
+
+            teacherImage = (ImageView) itemView.findViewById(R.id.ivTeacherImage);
+            tvKlassName = (TextView) itemView.findViewById(R.id.tvKlassName);
+            tvTeacherName = (TextView) itemView.findViewById(R.id.tvTeacherName);
+            tvStartTime = (TextView) itemView.findViewById(R.id.tvStartTime);
+            tvEndTime = (TextView) itemView.findViewById(R.id.tvEndTime);
+            tvDaysOfWeek = (TextView) itemView.findViewById(R.id.tvDaysOfWeek);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            itemView.getContext().startActivity(new Intent(itemView.getContext(), EventsActivity.class));
+            //Toast.makeText(itemView.getContext(), "Show Chat window here !!", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    public ClassAdapter(Context context, ArrayList<KlassRegistration> movies) {
-        super(context, R.layout.item_klass, movies);
+    // Pass in the contact array into the constructor
+    public ClassAdapter(Context context, List<KlassRegistration> classes) {
+        mClasses = classes;
         m_context = context;
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // Get the data item for this position
-        KlassRegistration kr = getItem(position);
-        Klass klass = kr.getKlass();
-        // Check if an existing view is being reused, otherwise inflate the view
-        ViewHolder viewHolder; // view lookup cache stored in tag
-        if (convertView == null) {
-            viewHolder = new ViewHolder();
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.item_klass, parent, false);
-
-            // Find image view
-            viewHolder.teacherImage = (ImageView) convertView.findViewById(R.id.ivTeacherImage);
-
-            viewHolder.tvKlassName = (TextView) convertView.findViewById(R.id.tvKlassName);
-            viewHolder.tvTeacherName = (TextView) convertView.findViewById(R.id.tvTeacherName);
-
-            if (viewHolder.teacherImage != null) {
-                Picasso.with(m_context).load(klass.getProfileUrl()).error(R.drawable.progress_animation)
-                        .transform(new RoundedCornersTransformation(2, 2))
-                        .placeholder(R.drawable.progress_animation).into(viewHolder.teacherImage);
-            }
-
-            viewHolder.tvStartTime = (TextView) convertView.findViewById(R.id.tvStartTime);
-            viewHolder.tvEndTime = (TextView) convertView.findViewById(R.id.tvEndTime);
-            viewHolder.tvDaysOfWeek = (TextView) convertView.findViewById(R.id.tvDaysOfWeek);
-            convertView.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) convertView.getTag();
-        }
-        // Populate the data into the template view using the data object
-        viewHolder.tvKlassName.setText(klass.getName());
-        viewHolder.tvTeacherName.setText(klass.getTeacherName());
-        viewHolder.teacherImage = (ImageView) convertView.findViewById(R.id.ivTeacherImage);
-        if (viewHolder.teacherImage != null) {
-            Picasso.with(m_context)
-                    .load(klass.getProfileUrl())
-                    .transform(new RoundedCornersTransformation(2, 2))
-                    .error(R.drawable.progress_animation)
-                    .placeholder(R.drawable.progress_animation)
-                    .into(viewHolder.teacherImage);
-        }
-        viewHolder.tvStartTime.setText(klass.getStartTime());
-        viewHolder.tvEndTime.setText(klass.getEndTime());
-        viewHolder.tvDaysOfWeek.setText(klass.getDaysOfWeek());
-        // Return the completed view to render on screen
-        return convertView;
+    // Easy access to the context object in the recyclerview
+    private Context getContext() {
+        return m_context;
     }
 }

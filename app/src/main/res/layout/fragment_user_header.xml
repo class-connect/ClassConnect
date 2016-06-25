@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout6"
+        android:orientation="horizontal"
+        android:layout_marginTop="2dp">
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/ivProfileImage"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginRight="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/ivProfileImage"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:text="User Name"
+            android:id="@+id/tvUserName"
+            android:textColor="#292f33"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Screen Name"
+            android:id="@+id/tvScreenName"
+            android:layout_toRightOf="@+id/tvUserName"
+            android:textColor="#8899a6"
+            android:layout_marginLeft="3dp"
+            android:textSize="12dp"
+            android:layout_marginTop="5dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:id="@+id/tvProStatus"
+        android:layout_below="@+id/linearLayout6"
+        android:layout_marginTop="10dp" />
+
+</RelativeLayout>

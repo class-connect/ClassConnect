@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.codepath.classconnect.activities.ClassDetailsActivity">
+
+    <ImageView
+        android:id="@+id/ivTeacherImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:adjustViewBounds="true"
+        android:layout_alignParentTop="true"
+        android:nestedScrollingEnabled="true"
+        android:layout_margin="5dp"
+        android:src="@android:color/holo_red_dark" />
+
+    <TextView
+        android:id="@+id/tvKlassName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentTop="true"
+        style="@style/TextStyle.Bold"
+        android:layout_toRightOf="@id/ivTeacherImage"
+        tools:text="Music Class" />
+
+    <TextView
+        android:id="@+id/tvTeacherName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/ivTeacherImage"
+        android:layout_below="@id/tvKlassName"
+        style="@style/TextStyle.Small"
+        tools:text="Ms. Johnson"
+        android:paddingTop="5dp" />
+
+    <TextView
+        android:id="@+id/tvClassDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivTeacherImage"
+        style="@style/TextStyle.Small"
+        tools:text="Ms. Johnson"
+        android:paddingTop="5dp" />
+
+
+</RelativeLayout>

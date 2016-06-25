@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +19,7 @@ import com.codepath.classconnect.R;
 import com.codepath.classconnect.UserManager;
 import com.codepath.classconnect.adapters.ClassAdapter;
 import com.codepath.classconnect.models.AppUser;
+import com.codepath.classconnect.models.Klass;
 import com.codepath.classconnect.models.KlassRegistration;
 import com.facebook.Profile;
 import com.parse.FindCallback;
@@ -25,11 +28,14 @@ import com.parse.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
+
 public class ClassActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 101;
 
-    private ListView lvKlasses;
+    //private ListView lvKlasses;
+    private RecyclerView rvKlasses;
     private ArrayList<KlassRegistration> klasses = new ArrayList<>();
     private ClassAdapter klassAdapter;
 
@@ -53,6 +59,22 @@ public class ClassActivity extends AppCompatActivity {
             }
         });
 
+        // Lookup the recyclerview in activity layout
+        rvKlasses = (RecyclerView) findViewById(R.id.rvKlasses);
+
+        // Create arrayAdapter
+        klassAdapter = new ClassAdapter(this, klasses);
+
+        if (rvKlasses != null) {
+            // Attach the adapter to the recyclerview to populate items
+            rvKlasses.setAdapter(klassAdapter);
+            // Set layout manager to position the items
+            rvKlasses.setLayoutManager(new LinearLayoutManager(this));
+        }
+
+        rvKlasses.setItemAnimator(new SlideInUpAnimator());
+
+        /*
         // Get reference to our ListView
         lvKlasses = (ListView) findViewById(R.id.lvKlasses);
 
@@ -63,6 +85,7 @@ public class ClassActivity extends AppCompatActivity {
         if (lvKlasses != null) {
             lvKlasses.setAdapter(klassAdapter);
         }
+        */
 
         populateData();
     }
@@ -156,7 +179,8 @@ public class ClassActivity extends AppCompatActivity {
                                 public void done(List<KlassRegistration> objects, ParseException e) {
                                     if (e == null) {
                                         klassAdapter.clear();
-                                        klassAdapter.addAll(objects);
+                                        klassAdapter.addAll(addClasses());
+                                        klassAdapter.notifyDataSetChanged();
                                     }
                                 }
                             });
@@ -171,10 +195,44 @@ public class ClassActivity extends AppCompatActivity {
                 public void done(List<KlassRegistration> objects, ParseException e) {
                     if (e == null) {
                         klassAdapter.clear();
-                        klassAdapter.addAll(objects);
+                        klassAdapter.addAll(addClasses());
+                        klassAdapter.notifyDataSetChanged();
                     }
                 }
             });
         }
+    }
+
+    private ArrayList<KlassRegistration> addClasses() {
+        ArrayList<KlassRegistration> classes = new ArrayList<KlassRegistration>();
+        KlassRegistration kreg1 = new KlassRegistration();
+        Klass k1 = new Klass();
+        k1.setName("Math Class");
+        AppUser user = new AppUser();
+        user.setName("Mr. Smith");
+        user.setProfileUrl("https://randomuser.me/api/portraits/thumb/men/20.jpg");
+        k1.setTeacher(user);
+        k1.setStartTime("10:30 AM");
+        k1.setEndTime("11:30 AM");
+        k1.setDaysOfWeek("Thursday");
+        kreg1.setKlass(k1);
+        kreg1.setTeacherName("Mr. Smith");
+        classes.add(kreg1);
+
+        KlassRegistration kreg2 = new KlassRegistration();
+        Klass k2 = new Klass();
+        k2.setName("Music Class");
+        AppUser user1 = new AppUser();
+        user1.setName("Miss. Johnson");
+        user1.setProfileUrl("https://randomuser.me/api/portraits/thumb/men/20.jpg");
+        k2.setTeacher(user);
+        k2.setStartTime("10:30 AM");
+        k2.setEndTime("11:30 AM");
+        k2.setDaysOfWeek("Friday");
+        kreg2.setKlass(k2);
+        kreg2.setTeacherName("Miss. Johnson");
+        classes.add(kreg2);
+
+        return classes;
     }
 }
