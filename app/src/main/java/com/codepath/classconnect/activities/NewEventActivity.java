@@ -1,6 +1,7 @@
 package com.codepath.classconnect.activities;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,11 +9,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.codepath.classconnect.R;
 import com.codepath.classconnect.UserManager;
 import com.codepath.classconnect.fragments.DatePickerFragment;
+import com.codepath.classconnect.fragments.TimePickerFragment;
 import com.codepath.classconnect.models.Event;
 import com.codepath.classconnect.models.Klass;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -33,6 +36,8 @@ import butterknife.ButterKnife;
 public class NewEventActivity extends AppCompatActivity {
 
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MM/dd/yyyy");
+    private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("hh:mm a");
+
     private static final int PLACE_PICKER_REQUEST = 1;
 
     @BindView(R.id.etEventName) EditText etEventName;
@@ -44,6 +49,8 @@ public class NewEventActivity extends AppCompatActivity {
     @BindView(R.id.etLocation) EditText etLocation;
 
     private Klass klass;
+    private Date startDate;
+    private Date endDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +69,13 @@ public class NewEventActivity extends AppCompatActivity {
             }
         });
 
-        etStartDate.setText(null);
-        etEndDate.setText(null);
+        if (startDate == null) {
+            startDate = initDate();
+        }
+
+        if (endDate == null) {
+            endDate = initDate();
+        }
     }
 
     public void saveEvent(View view) {
@@ -73,13 +85,11 @@ public class NewEventActivity extends AppCompatActivity {
         event.setName(etEventName.getText().toString());
         event.setNotes(etNotes.getText().toString());
         event.setLocation(etLocation.getText().toString());
-        Date startTime = parse(etStartDate.getText().toString());
-        if (startTime != null) {
-            event.setStartTime(startTime);
+        if (!TextUtils.isEmpty(etStartDate.getText().toString())) {
+            event.setStartTime(startDate);
         }
-        Date endTime = parse(etEndDate.getText().toString());
-        if (endTime != null) {
-            event.setEndTime(endTime);
+        if (!TextUtils.isEmpty(etEndDate.getText().toString())) {
+            event.setEndTime(endDate);
         }
         event.saveInBackground(new SaveCallback() {
             @Override
@@ -127,7 +137,7 @@ public class NewEventActivity extends AppCompatActivity {
         }
 
         Bundle args = new Bundle();
-        Date date = parse(value);
+        Date date = parse(DATE_FORMAT, value);
         if (date != null) {
             Calendar cal = Calendar.getInstance();
             cal.setTime(date);
@@ -149,27 +159,105 @@ public class NewEventActivity extends AppCompatActivity {
 
     private void setDate(EditText text, int year, int monthOfYear, int dayOfMonth) {
         Calendar cal = Calendar.getInstance();
+        if (text == etStartDate) {
+            cal.setTime(startDate);
+        }
+        else {
+            cal.setTime(endDate);
+        }
         cal.set(Calendar.YEAR, year);
         cal.set(Calendar.MONTH, monthOfYear);
         cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         Date date = cal.getTime();
-        text.setText(format(date));
+        text.setText(format(DATE_FORMAT, date));
+        if (text == etStartDate) {
+            startDate = date;
+        }
+        else {
+            endDate = date;
+        }
     }
 
-    private String format(Date date) {
-        return date == null ? null : DATE_FORMAT.format(date);
+    private String format(SimpleDateFormat fmt, Date date) {
+        return date == null ? null : fmt.format(date);
     }
 
-    private Date parse(String value) {
+    private Date parse(SimpleDateFormat fmt, String value) {
         if (TextUtils.isEmpty(value)) {
             return null;
         }
 
         try {
-            return DATE_FORMAT.parse(value);
+            return fmt.parse(value);
         } catch (ParseException e) {
             Toast.makeText(this, "Invalid date", Toast.LENGTH_SHORT).show();
         }
         return null;
+    }
+
+    public void showTimePickerDialog(View v) {
+        String tag;
+        String value;
+        final EditText text;
+
+        if (v == etStartTime) {
+            text = etStartTime;
+            tag = "startTime";
+            value = etStartTime.getText().toString();
+        }
+        else {
+            text = etEndTime;
+            tag = "endTime";
+            value = etEndTime.getText().toString();
+        }
+
+        Bundle args = new Bundle();
+        Date date = parse(TIME_FORMAT, value);
+        if (date != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            args.putInt("hourOfDay", cal.get(Calendar.HOUR_OF_DAY));
+            args.putInt("minute", cal.get(Calendar.MINUTE));
+        }
+
+        TimePickerFragment fragment = new TimePickerFragment();
+        fragment.setListener(new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                setTime(text, hourOfDay, minute);
+            }
+        });
+        fragment.setArguments(args);
+        fragment.show(getSupportFragmentManager(), tag);
+    }
+
+    private void setTime(EditText text, int hourOfDay, int minute) {
+        Calendar cal = Calendar.getInstance();
+        if (text == etStartTime) {
+            cal.setTime(startDate);
+        }
+        else {
+            cal.setTime(endDate);
+        }
+        cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        cal.set(Calendar.MINUTE, minute);
+        Date date = cal.getTime();
+        text.setText(format(TIME_FORMAT, date));
+        if (text == etStartTime) {
+            startDate = date;
+        }
+        else {
+            endDate = date;
+        }
+    }
+
+    private Date initDate() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        cal.add(Calendar.DAY_OF_MONTH, 1);
+        return cal.getTime();
     }
 }

@@ -69,6 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="time"
+                android:onClick="showTimePickerDialog"
                 />
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
@@ -112,6 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="time"
+                android:onClick="showTimePickerDialog"
                 />
         </android.support.design.widget.TextInputLayout>
     </LinearLayout>
