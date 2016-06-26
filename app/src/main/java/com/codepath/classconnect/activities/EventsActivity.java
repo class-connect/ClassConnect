@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -17,6 +18,8 @@ import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.classconnect.R;
+import com.codepath.classconnect.fragments.ClassActivityFragment;
+import com.codepath.classconnect.fragments.ClassDetailFragment;
 import com.codepath.classconnect.fragments.ClassEventsFragment;
 
 public class EventsActivity extends AppCompatActivity {
@@ -37,9 +40,10 @@ public class EventsActivity extends AppCompatActivity {
         menu.setDisplayHomeAsUpEnabled(true);
 
         ViewPager vpPager = (ViewPager)findViewById(R.id.viewpager);
-        vpPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager()));
+        vpPager.setAdapter(new EventsPagerAdapter(getSupportFragmentManager()));
         PagerSlidingTabStrip pgSlidingTabStrip = (PagerSlidingTabStrip)findViewById(R.id.tabs);
         pgSlidingTabStrip.setViewPager(vpPager);
+
     }
 
     @Override
@@ -107,19 +111,19 @@ public class EventsActivity extends AppCompatActivity {
         //startActivityForResult(i, REQUEST_CODE);
     }
 
-    public class TweetsPagerAdapter extends FragmentPagerAdapter {
+    public class EventsPagerAdapter extends FragmentPagerAdapter {
         final int PAGE_COUNT = 2;
 
         private String tabTitle[] = {"Activity", "Events"};
 
-        public TweetsPagerAdapter(FragmentManager fm) {
+        public EventsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return new Fragment();
+                return new ClassActivityFragment();
             } else if (position == 1){
                 return new ClassEventsFragment();
             } else {

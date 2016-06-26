@@ -1,12 +1,15 @@
 package com.codepath.classconnect.activities;
 
 import android.content.Intent;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.codepath.classconnect.R;
+import com.codepath.classconnect.fragments.ClassActivityFragment;
+import com.codepath.classconnect.fragments.ClassDetailFragment;
 import com.codepath.classconnect.models.Klass;
 
 public class ClassDetailsActivity extends AppCompatActivity {
@@ -24,8 +27,14 @@ public class ClassDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String desc = intent.getStringExtra("KlassDesc");
 
-        TextView tvDesc = (TextView) findViewById(R.id.tvClassDescription);
-        tvDesc.setText(desc);
+        if (savedInstanceState == null) {
+            ClassDetailFragment userHeaderFragment = ClassDetailFragment.newInstance();
+
+            // Display user fragment in this activity - dynamic way
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.flContainer, userHeaderFragment);
+            ft.commit();
+        }
 
     }
 

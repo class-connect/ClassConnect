@@ -21,6 +21,11 @@ public class ClassActivityFragment extends ClassListFragment {
         populateClassActivity(page);
     }
 
+    public static ClassActivityFragment newInstance() {
+        ClassActivityFragment userFragment = new ClassActivityFragment();
+        return userFragment;
+    }
+
     // send api request to get timeline json
     // fill listview
     private void populateClassActivity(int sinceId) {

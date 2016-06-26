@@ -62,6 +62,10 @@ public class ClassActivity extends AppCompatActivity {
         // Lookup the recyclerview in activity layout
         rvKlasses = (RecyclerView) findViewById(R.id.rvKlasses);
 
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        rvKlasses.setHasFixedSize(true);
+
         // Create arrayAdapter
         klassAdapter = new ClassAdapter(this, klasses);
 
@@ -201,10 +205,10 @@ public class ClassActivity extends AppCompatActivity {
         ArrayList<KlassRegistration> classes = new ArrayList<KlassRegistration>();
         KlassRegistration kreg1 = new KlassRegistration();
         Klass k1 = new Klass();
-        k1.setName("Math Class");
+        k1.setName("Drama Class");
         AppUser user = new AppUser();
         user.setName("Mr. Smith");
-        user.setProfileUrl("https://randomuser.me/api/portraits/thumb/men/20.jpg");
+        user.setProfileUrl("https://randomuser.me/api/portraits/men/74.jpg");
         k1.setTeacher(user);
         k1.setStartTime("10:30 AM");
         k1.setEndTime("11:30 AM");
@@ -218,7 +222,7 @@ public class ClassActivity extends AppCompatActivity {
         k2.setName("Music Class");
         AppUser user1 = new AppUser();
         user1.setName("Miss. Johnson");
-        user1.setProfileUrl("https://randomuser.me/api/portraits/thumb/men/20.jpg");
+        user1.setProfileUrl("https://randomuser.me/api/portraits/women/9.jpg");
         k2.setTeacher(user);
         k2.setStartTime("10:30 AM");
         k2.setEndTime("11:30 AM");
