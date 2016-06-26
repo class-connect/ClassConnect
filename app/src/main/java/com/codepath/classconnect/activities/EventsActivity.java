@@ -92,7 +92,7 @@ public class EventsActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 return true;
 
-            case R.id.home:
+            case android.R.id.home:
                 finish();
                 overridePendingTransition(R.anim.left_in, R.anim.right_out);
                 return true;

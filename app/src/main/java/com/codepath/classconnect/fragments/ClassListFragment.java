@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.codepath.classconnect.R;
-import com.codepath.classconnect.adapters.TweetsArrayAdapter;
+import com.codepath.classconnect.adapters.ChatListAdapter;
 import com.codepath.classconnect.listeners.EndlessScrollListener;
-import com.codepath.classconnect.models.Tweet;
+import com.codepath.classconnect.models.Message;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +21,8 @@ import java.util.List;
  * Created by adeshpa on 6/11/16.
  */
 public abstract class ClassListFragment extends Fragment {
-    private ArrayList<Tweet> tweets;
-    private TweetsArrayAdapter aTweets;
+    private ArrayList<Message> messages;
+    private ChatListAdapter aChatList;
     protected ListView lvTweets;
     private SwipeRefreshLayout swipeContainer;
 
@@ -38,7 +38,7 @@ public abstract class ClassListFragment extends Fragment {
 
     private void setUpViews(View v) {
         lvTweets = (ListView) v.findViewById(R.id.lvTweets);
-        lvTweets.setAdapter(aTweets);
+        lvTweets.setAdapter(aChatList);
         lvTweets.setOnScrollListener(new EndlessScrollListener() {
             @Override
             public boolean onLoadMore(int page, int totalItemsCount){
@@ -51,7 +51,7 @@ public abstract class ClassListFragment extends Fragment {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                aTweets.clear();
+                aChatList.clear();
                 customLoadMore(1);
                 swipeContainer.setRefreshing(false);
 
@@ -69,12 +69,12 @@ public abstract class ClassListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        tweets = new ArrayList<Tweet>();
-        aTweets = new TweetsArrayAdapter(getActivity(), tweets);
+        messages = new ArrayList<Message>();
+        //aTweets = new ChatListAdapter();
     }
 
-    public void addAll(List<Tweet>tweets) {
-        aTweets.addAll(tweets);
+    public void addAll(List<Message>tweets) {
+        //aTweets.addAll(tweets);
     }
 
     protected abstract void customLoadMore(int page);
