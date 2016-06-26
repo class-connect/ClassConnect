@@ -3,6 +3,7 @@ package com.codepath.classconnect.models;
 import android.text.format.DateUtils;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -70,6 +71,13 @@ public class Message extends ParseObject {
             }
         }
         return date;
+    }
+
+    public static void findByObjectId(String objectId, GetCallback<Message> callback) {
+        ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
+        query.include(KEY_KLASS);
+        query.include(KEY_USER);
+        query.getInBackground(objectId, callback);
     }
 
     public static void findAll(Klass klass, FindCallback<Message> callback) {

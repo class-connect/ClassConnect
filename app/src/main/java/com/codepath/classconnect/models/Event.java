@@ -1,6 +1,7 @@
 package com.codepath.classconnect.models;
 
 import com.parse.FindCallback;
+import com.parse.GetCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -85,6 +86,13 @@ public class Event extends ParseObject {
     public String getProfileUrl() {
         AppUser user = getUser();
         return user != null ? user.getProfileUrl() : null;
+    }
+
+    public static void findByObjectId(String objectId, GetCallback<Event> callback) {
+        ParseQuery<Event> query = ParseQuery.getQuery(Event.class);
+        query.include(KEY_KLASS);
+        query.include(KEY_USER);
+        query.getInBackground(objectId, callback);
     }
 
     public static void findAll(Klass klass, FindCallback<Event> callback) {
