@@ -2,7 +2,6 @@ package com.codepath.classconnect.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +11,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codepath.classconnect.R;
 import com.codepath.classconnect.activities.ClassDetailsActivity;
 import com.codepath.classconnect.activities.EventsActivity;
-import com.codepath.classconnect.models.Event;
 import com.codepath.classconnect.models.Klass;
 import com.codepath.classconnect.models.KlassRegistration;
 import com.squareup.picasso.Picasso;
@@ -60,6 +57,11 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
         TextView tvKlassName = viewHolder.tvKlassName;
         if (tvKlassName != null) {
             tvKlassName.setText(klass.getName());
+        }
+
+        TextView tvStudentName = viewHolder.tvStudentName;
+        if (tvStudentName != null) {
+            tvStudentName.setText(kr.getStudentName());
         }
 
         TextView tvTeacherName = viewHolder.tvTeacherName;
@@ -143,6 +145,7 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
             View.OnClickListener {
         ImageView teacherImage;
         TextView tvKlassName;
+        TextView tvStudentName;
         TextView tvTeacherName;
         TextView tvStartTime;
         TextView tvEndTime;
@@ -153,6 +156,7 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
 
             teacherImage = (ImageView) itemView.findViewById(R.id.ivTeacherImage);
             tvKlassName = (TextView) itemView.findViewById(R.id.tvKlassName);
+            tvStudentName = (TextView) itemView.findViewById(R.id.tvStudentName);
             tvTeacherName = (TextView) itemView.findViewById(R.id.tvTeacherName);
             tvStartTime = (TextView) itemView.findViewById(R.id.tvStartTime);
             tvEndTime = (TextView) itemView.findViewById(R.id.tvEndTime);
