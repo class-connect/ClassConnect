@@ -13,13 +13,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ListView;
 
 import com.codepath.classconnect.R;
 import com.codepath.classconnect.UserManager;
 import com.codepath.classconnect.adapters.ClassAdapter;
 import com.codepath.classconnect.models.AppUser;
-import com.codepath.classconnect.models.Klass;
 import com.codepath.classconnect.models.KlassRegistration;
 import com.facebook.Profile;
 import com.parse.FindCallback;
@@ -177,7 +175,7 @@ public class ClassActivity extends AppCompatActivity {
                                 public void done(List<KlassRegistration> objects, ParseException e) {
                                     if (e == null) {
                                         klassAdapter.clear();
-                                        klassAdapter.addAll(addClasses());
+                                        klassAdapter.addAll(objects);
                                         klassAdapter.notifyDataSetChanged();
                                     }
                                 }
@@ -193,44 +191,11 @@ public class ClassActivity extends AppCompatActivity {
                 public void done(List<KlassRegistration> objects, ParseException e) {
                     if (e == null) {
                         klassAdapter.clear();
-                        klassAdapter.addAll(addClasses());
+                        klassAdapter.addAll(objects);
                         klassAdapter.notifyDataSetChanged();
                     }
                 }
             });
         }
-    }
-
-    private ArrayList<KlassRegistration> addClasses() {
-        ArrayList<KlassRegistration> classes = new ArrayList<KlassRegistration>();
-        KlassRegistration kreg1 = new KlassRegistration();
-        Klass k1 = new Klass();
-        k1.setName("Drama Class");
-        AppUser user = new AppUser();
-        user.setName("Mr. Smith");
-        user.setProfileUrl("https://randomuser.me/api/portraits/men/74.jpg");
-        k1.setTeacher(user);
-        k1.setStartTime("10:30 AM");
-        k1.setEndTime("11:30 AM");
-        k1.setDaysOfWeek("Thursday");
-        kreg1.setKlass(k1);
-        kreg1.setTeacherName("Mr. Smith");
-        classes.add(kreg1);
-
-        KlassRegistration kreg2 = new KlassRegistration();
-        Klass k2 = new Klass();
-        k2.setName("Music Class");
-        AppUser user1 = new AppUser();
-        user1.setName("Miss. Johnson");
-        user1.setProfileUrl("https://randomuser.me/api/portraits/women/9.jpg");
-        k2.setTeacher(user);
-        k2.setStartTime("10:30 AM");
-        k2.setEndTime("11:30 AM");
-        k2.setDaysOfWeek("Friday");
-        kreg2.setKlass(k2);
-        kreg2.setTeacherName("Miss. Johnson");
-        classes.add(kreg2);
-
-        return classes;
     }
 }

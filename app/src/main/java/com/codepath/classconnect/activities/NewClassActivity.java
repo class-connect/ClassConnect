@@ -19,7 +19,6 @@ import java.util.List;
 
 public class NewClassActivity extends AppCompatActivity {
 
-    private EditText etTeacherName;
     private EditText etStudentName;
     private EditText etCode;
 
@@ -28,7 +27,6 @@ public class NewClassActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_class);
 
-        etTeacherName = (EditText) findViewById(R.id.etTeacherName);
         etStudentName = (EditText) findViewById(R.id.etStudentName);
         etCode = (EditText) findViewById(R.id.etCodeName);
 
@@ -88,7 +86,6 @@ public class NewClassActivity extends AppCompatActivity {
                                 if (e == null) {
                                     if (objects == null || objects.isEmpty()) {
                                         KlassRegistration kr = new KlassRegistration();
-                                        kr.setTeacherName(klass.getTeacherName());
                                         kr.setStudentName(student);
                                         kr.setKlass(klass);
                                         kr.setOwner(UserManager.getCurrentUser());

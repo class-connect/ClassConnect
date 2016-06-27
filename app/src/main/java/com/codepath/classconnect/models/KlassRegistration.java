@@ -13,7 +13,6 @@ public class KlassRegistration extends ParseObject {
 
     public static final String KEY_KLASS = "klass";
     public static final String KEY_OWNER = "owner";
-    public static final String KEY_TEACHER_NAME = "teacherName";
     public static final String KEY_STUDENT_NAME = "studentName";
 
     public Klass getKlass() {
@@ -30,14 +29,6 @@ public class KlassRegistration extends ParseObject {
 
     public void setOwner(AppUser owner) {
         put(KEY_OWNER, owner);
-    }
-
-    public String getTeacherName() {
-        return getString(KEY_TEACHER_NAME);
-    }
-
-    public void setTeacherName(String name) {
-        put(KEY_TEACHER_NAME, name);
     }
 
     public String getStudentName() {

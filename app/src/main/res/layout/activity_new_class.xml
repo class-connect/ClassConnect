@@ -10,7 +10,7 @@
     tools:context="com.codepath.classconnect.activities.NewClassActivity">
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/teacherNameWrapper"
+        android:id="@+id/studentNameWrapper"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -19,26 +19,6 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="66dp"
-        android:hint="@string/teacher_name"
-        >
-
-        <EditText
-            android:id="@+id/etTeacherName"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/studentNameWrapper"
-        android:layout_below="@+id/teacherNameWrapper"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="20dp"
         android:hint="@string/student_name"
         >
 
