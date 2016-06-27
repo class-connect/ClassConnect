@@ -1,16 +1,13 @@
 package com.codepath.classconnect.activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.codepath.classconnect.R;
-import com.codepath.classconnect.fragments.ClassActivityFragment;
 import com.codepath.classconnect.fragments.ClassDetailFragment;
-import com.codepath.classconnect.models.Klass;
 
 public class ClassDetailsActivity extends AppCompatActivity {
 
@@ -25,10 +22,10 @@ public class ClassDetailsActivity extends AppCompatActivity {
         menu.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        String desc = intent.getStringExtra("KlassDesc");
+        String klassId = intent.getStringExtra("klassId");
 
         if (savedInstanceState == null) {
-            ClassDetailFragment userHeaderFragment = ClassDetailFragment.newInstance();
+            ClassDetailFragment userHeaderFragment = ClassDetailFragment.newInstance(klassId);
 
             // Display user fragment in this activity - dynamic way
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

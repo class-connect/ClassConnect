@@ -50,26 +50,39 @@
                 style="@style/TextStyle.Small"
                 tools:text="Ms. Johnson"
                 android:paddingTop="5dp" />
-
-            <TextView
-                android:id="@+id/tvNumStudents"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/ivTeacherImage"
-                android:layout_below="@id/tvKlassName"
-                style="@style/TextStyle.Small"
-                tools:text="20"
-                android:paddingTop="5dp" />
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvAboutClass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextStyle.Bold"
+        android:text="About the class"
+        android:paddingTop="5dp" />
 
     <TextView
         android:id="@+id/tvClassDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ivTeacherImage"
         style="@style/TextStyle.Small"
         tools:text="Ms. Johnson"
+        android:paddingTop="5dp" />
+
+    <TextView
+        android:id="@+id/tvAboutTeacher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextStyle.Bold"
+        android:text="About the teacher"
+        android:paddingTop="5dp" />
+
+    <TextView
+        android:id="@+id/tvTeacherBio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextStyle.Small"
+        tools:text="Bio"
         android:paddingTop="5dp" />
 
 </LinearLayout>

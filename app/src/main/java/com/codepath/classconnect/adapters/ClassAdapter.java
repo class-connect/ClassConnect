@@ -98,7 +98,7 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
                 public void onClick(View v) {
                     //Toast.makeText(v.getContext(), "Show Teachers Details here", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(v.getContext(), ClassDetailsActivity.class);
-                    intent.putExtra("KlassDesc", "This is new class starting on Friday");
+                    intent.putExtra("klassId", klass.getObjectId());
                     v.getContext().startActivity(intent);
                     // Here you apply the animation when the view is bound
                     setAnimation(viewHolder.teacherImage, position);
