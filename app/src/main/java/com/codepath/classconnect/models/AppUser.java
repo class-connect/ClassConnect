@@ -17,6 +17,7 @@ public class AppUser extends ParseObject {
     public static final String KEY_ID = "userId";
     public static final String KEY_NAME = "name";
     public static final String KEY_PROFILE_URL = "profileUrl";
+    public static final String KEY_BIO = "bio";
     public static final String KEY_STUDENTS = "students";
 
     public String getUserId() {
@@ -41,6 +42,14 @@ public class AppUser extends ParseObject {
 
     public void setProfileUrl(String profileUrl) {
         put(KEY_PROFILE_URL, profileUrl);
+    }
+
+    public String getBio() {
+        return getString(KEY_BIO);
+    }
+
+    public void setBio(String bio) {
+        put(KEY_BIO, bio);
     }
 
     public void addStudent(Student student) {
