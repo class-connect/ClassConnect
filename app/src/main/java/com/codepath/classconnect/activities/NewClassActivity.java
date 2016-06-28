@@ -70,6 +70,7 @@ public class NewClassActivity extends AppCompatActivity {
     public void addClass(View view) {
         final String student = etStudentName.getText().toString();
         String code = etCode.getText().toString();
+
         Klass.findByCode(code, new FindCallback<Klass>() {
             @Override
             public void done(List<Klass> objects, ParseException e) {

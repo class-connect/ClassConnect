@@ -5,6 +5,7 @@ import android.text.format.DateUtils;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseClassName;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -20,6 +21,8 @@ public class Message extends ParseObject {
     public static final String KEY_USER = "user";
     public static final String KEY_BODY = "body";
     public static final String KEY_CREATED_AT = "createdAt";
+    public static final String KEY_PHOTO ="photo";
+
 
     public Klass getKlass() {
         return (Klass) getParseObject(KEY_KLASS);
@@ -43,6 +46,16 @@ public class Message extends ParseObject {
 
     public void setBody(String body) {
         put(KEY_BODY, body);
+    }
+
+    public String getPhoto(){
+       return getString("photo");
+
+    }
+
+    public void setPhoto(ParseFile pFile){
+       put("photo", pFile);
+
     }
 
     public String getUserName() {

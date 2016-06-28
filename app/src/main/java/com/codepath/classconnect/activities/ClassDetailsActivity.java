@@ -24,6 +24,8 @@ public class ClassDetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String klassId = intent.getStringExtra("klassId");
 
+
+
         if (savedInstanceState == null) {
             ClassDetailFragment userHeaderFragment = ClassDetailFragment.newInstance(klassId);
 
@@ -65,4 +67,9 @@ public class ClassDetailsActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
+
 }

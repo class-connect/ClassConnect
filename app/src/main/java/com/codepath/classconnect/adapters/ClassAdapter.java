@@ -168,6 +168,7 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
         @Override
         public void onClick(View v) {
             itemView.getContext().startActivity(new Intent(itemView.getContext(), EventsActivity.class));
+            //itemView.getContext().startActivity(new Intent(itemView.getContext(), ChatMainActivity.class));
             //Toast.makeText(itemView.getContext(), "Show Chat window here !!", Toast.LENGTH_SHORT).show();
         }
     }
