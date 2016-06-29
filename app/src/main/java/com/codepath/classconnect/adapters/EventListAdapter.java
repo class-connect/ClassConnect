@@ -1,6 +1,7 @@
 package com.codepath.classconnect.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.codepath.classconnect.R;
+import com.codepath.classconnect.activities.EventDetailsActivity;
 import com.codepath.classconnect.models.Event;
 
 import java.util.ArrayList;
@@ -50,6 +52,14 @@ public class EventListAdapter  extends ArrayAdapter<Event> {
         viewHolder.tvEventNote.setText(event.getNotes());
         viewHolder.tvEventLocation.setText(event.getLocation());
 
+        convertView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), EventDetailsActivity.class);
+                intent.putExtra("eventId", event.getObjectId());
+                v.getContext().startActivity(intent);
+            }
+        });
 
         // Return the completed view to render on screen
         return convertView;
