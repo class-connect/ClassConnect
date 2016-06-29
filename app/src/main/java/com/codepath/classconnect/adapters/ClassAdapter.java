@@ -92,23 +92,32 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
                     .error(R.drawable.progress_animation)
                     .placeholder(R.drawable.progress_animation)
                     .into(ivTeacherImage);
-
-            ivTeacherImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Toast.makeText(v.getContext(), "Show Teachers Details here", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(v.getContext(), ClassDetailsActivity.class);
-                    intent.putExtra("klassId", klass.getObjectId());
-                    v.getContext().startActivity(intent);
-                    // Here you apply the animation when the view is bound
-                    setAnimation(viewHolder.teacherImage, position);
-                }
-
-            });
         }
+
+        String klassId = klass.getObjectId();
+        setListener(ivTeacherImage, klassId, ClassDetailsActivity.class);
+        setListener(tvKlassName, klassId, EventsActivity.class);
+        setListener(tvStudentName, klassId, EventsActivity.class);
+        setListener(tvTeacherName, klassId, EventsActivity.class);
+        setListener(tvStartTime, klassId, EventsActivity.class);
+        setListener(tvEndTime, klassId, EventsActivity.class);
+        setListener(tvDaysOfWeek, klassId, EventsActivity.class);
+        setListener(viewHolder.itemView, klassId, EventsActivity.class);
 
         // Set the view to fade in
         setFadeAnimation(viewHolder.itemView);
+    }
+
+    private void setListener(View v, final String klassId, final Class<?> cls) {
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(v.getContext(), "Show Teachers Details here", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(v.getContext(), cls);
+                intent.putExtra("klassId", klassId);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     private void setFadeAnimation(View view) {
@@ -150,6 +159,7 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
         TextView tvStartTime;
         TextView tvEndTime;
         TextView tvDaysOfWeek;
+        View itemView;
 
         public ViewHolder(final View itemView, ClassAdapter classAdapter) {
             super(itemView);
@@ -161,8 +171,9 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
             tvStartTime = (TextView) itemView.findViewById(R.id.tvStartTime);
             tvEndTime = (TextView) itemView.findViewById(R.id.tvEndTime);
             tvDaysOfWeek = (TextView) itemView.findViewById(R.id.tvDaysOfWeek);
+            this.itemView = itemView;
 
-            itemView.setOnClickListener(this);
+            //itemView.setOnClickListener(this);
         }
 
         @Override
