@@ -3,12 +3,4 @@
       xmlns:tools="http://schemas.android.com/tools"
       tools:context=".activities.LoginActivity">
 
-    <item
-        android:id="@+id/action_addEvent"
-        android:orderInCategory="3"
-        android:layout_width="46dp"
-        android:layout_height="56dp"
-        android:layout_gravity="right"
-        app:showAsAction="ifRoom"
-        android:title="@string/add_event" />
 </menu>

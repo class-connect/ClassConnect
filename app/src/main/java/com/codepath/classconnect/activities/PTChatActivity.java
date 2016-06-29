@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.classconnect.R;
@@ -108,16 +107,6 @@ public class PTChatActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
         switch (item.getItemId()) {
-           /* case R.id.miCompose:
-                Intent i = new Intent(this,PostTweets.class);
-                startActivityForResult(i, REQUEST_CODE);
-                return true;*/
-            case R.id.action_addEvent:
-                Intent i = new Intent(this, NewEventActivity.class);
-                startActivity(i);
-                overridePendingTransition(R.anim.right_in, R.anim.left_out);
-                return true;
-
             case android.R.id.home:
                 finish();
                 overridePendingTransition(R.anim.left_in, R.anim.right_out);

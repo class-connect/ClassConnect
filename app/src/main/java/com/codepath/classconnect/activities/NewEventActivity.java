@@ -4,9 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,8 +65,8 @@ public class NewEventActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        // TODO: Get from intent
-        final String klassId = "owPgAuBuQQ";
+        Intent intent = getIntent();
+        final String klassId = intent.getStringExtra("klassId");
 
         Klass.findByObjectId(klassId, new GetCallback<Klass>() {
             @Override
