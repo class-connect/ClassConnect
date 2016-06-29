@@ -53,7 +53,7 @@
         <activity android:name=".activities.NewClassActivity"/>
         <activity android:name=".activities.NewEventActivity"/>
         <activity android:name=".activities.ClassDetailsActivity"/>
-        <activity android:name=".activities.EventsActivity"/>
+        <activity android:name=".activities.PTChatActivity"/>
         <activity android:name=".activities.EventDetailsActivity"/>
         <activity android:name=".activities.ChatMainActivity">
 
