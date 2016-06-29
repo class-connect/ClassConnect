@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.classconnect.R;
 import com.codepath.classconnect.activities.ChatMainActivity;
 import com.codepath.classconnect.adapters.MessageListAdapter;
@@ -38,7 +39,6 @@ public class ClassActivityFragment extends ClassListFragment implements SwipeRef
     boolean mFirstLoad;
     Handler mHandler = new Handler();  // android.os.Handler
     private final int REQUEST_CODE=1001;
-
 
     static final int MAX_CHAT_MESSAGES_TO_SHOW = 500;
     static final int POLL_INTERVAL = 10000; // milliseconds
@@ -75,7 +75,7 @@ public class ClassActivityFragment extends ClassListFragment implements SwipeRef
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tweets_list,parent,false);
+        View view = inflater.inflate(R.layout.fragment_message_list,parent,false);
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.activity_main_swipe_refresh_layout);
         lvTimeline= (ListView)view.findViewById(R.id.lvTweets);
         // Setup refresh listener which triggers new data loading
@@ -85,6 +85,7 @@ public class ClassActivityFragment extends ClassListFragment implements SwipeRef
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+
         messageListAdapter = new MessageListAdapter(getActivity(),messages);
         lvTimeline.setAdapter(messageListAdapter);
         ImageButton fab = (ImageButton)view.findViewById(R.id.fabMessage);
@@ -118,7 +119,6 @@ public class ClassActivityFragment extends ClassListFragment implements SwipeRef
                 populateTimeline();
             }
         });
-
 
         return view;
     }

@@ -30,7 +30,7 @@ public abstract class ClassListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_tweets_list, container, false);
+        View v = inflater.inflate(R.layout.fragment_message_list, container, false);
 
         setUpViews(v);
         return v;

@@ -10,19 +10,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.classconnect.R;
 import com.codepath.classconnect.fragments.ClassActivityFragment;
 import com.codepath.classconnect.fragments.ClassEventsFragment;
 
-public class EventsActivity extends AppCompatActivity {
+public class PTChatActivity extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 123;
     private static final int RESULT_OK = 200;
+
     // Instance of the progress action-view
     MenuItem miActionProgressItem;
     String klassId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,30 @@ public class EventsActivity extends AppCompatActivity {
         vpPager.setAdapter(new EventsPagerAdapter(getSupportFragmentManager()));
         PagerSlidingTabStrip pgSlidingTabStrip = (PagerSlidingTabStrip)findViewById(R.id.tabs);
         pgSlidingTabStrip.setViewPager(vpPager);
+
+        // Attach the page change listener to tab strip and **not** the view pager inside the activity
+        pgSlidingTabStrip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            // This method will be invoked when a new page becomes selected.
+            @Override
+            public void onPageSelected(int position) {
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+
+            // This method will be invoked when the current page is scrolled
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                // Code goes here
+            }
+
+            // Called when the scroll state changes:
+            // SCROLL_STATE_IDLE, SCROLL_STATE_DRAGGING, SCROLL_STATE_SETTLING
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                // Code goes here
+            }
+        });
+
 
     }
 
@@ -101,6 +128,7 @@ public class EventsActivity extends AppCompatActivity {
         }
     }
 
+
     public void onTweetClick(View view) {
         //Intent i = new Intent(this,PostTweets.class);
         //startActivityForResult(i, REQUEST_CODE);
@@ -110,6 +138,7 @@ public class EventsActivity extends AppCompatActivity {
         final int PAGE_COUNT = 2;
 
         private String tabTitle[] = {"Activity", "Events"};
+        private int tabIcons[] = {R.drawable.ic_add_message, R.drawable.ic_add_event};
 
         public EventsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -121,7 +150,7 @@ public class EventsActivity extends AppCompatActivity {
                 return ClassActivityFragment.newInstance(klassId);
 
             } else if (position == 1){
-                return new ClassEventsFragment();
+                return ClassEventsFragment.newInstance(klassId);
             } else {
                 return null;
             }
@@ -136,6 +165,7 @@ public class EventsActivity extends AppCompatActivity {
         public int getCount() {
             return tabTitle.length;
         }
+
     }
 
     public void showProgressBar() {

@@ -6,27 +6,30 @@
 
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/activity_main_swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ListView
-            android:id="@+id/lvTweets"
+            android:id="@+id/lvEvents"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email"/>
-
+    <ImageButton
+        android:id="@+id/fabEvent"
+        android:background="@drawable/round_corner"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:src="@drawable/ic_add_event"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:scaleType="fitCenter"
+        />
 </android.support.design.widget.CoordinatorLayout>
 
 

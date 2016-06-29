@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.codepath.classconnect.R;
 import com.codepath.classconnect.activities.ClassDetailsActivity;
-import com.codepath.classconnect.activities.EventsActivity;
+import com.codepath.classconnect.activities.PTChatActivity;
 import com.codepath.classconnect.models.Klass;
 import com.codepath.classconnect.models.KlassRegistration;
 import com.squareup.picasso.Picasso;
@@ -96,13 +96,13 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
 
         String klassId = klass.getObjectId();
         setListener(ivTeacherImage, klassId, ClassDetailsActivity.class);
-        setListener(tvKlassName, klassId, EventsActivity.class);
-        setListener(tvStudentName, klassId, EventsActivity.class);
-        setListener(tvTeacherName, klassId, EventsActivity.class);
-        setListener(tvStartTime, klassId, EventsActivity.class);
-        setListener(tvEndTime, klassId, EventsActivity.class);
-        setListener(tvDaysOfWeek, klassId, EventsActivity.class);
-        setListener(viewHolder.itemView, klassId, EventsActivity.class);
+        setListener(tvKlassName, klassId, PTChatActivity.class);
+        setListener(tvStudentName, klassId, PTChatActivity.class);
+        setListener(tvTeacherName, klassId, PTChatActivity.class);
+        setListener(tvStartTime, klassId, PTChatActivity.class);
+        setListener(tvEndTime, klassId, PTChatActivity.class);
+        setListener(tvDaysOfWeek, klassId, PTChatActivity.class);
+        setListener(viewHolder.itemView, klassId, PTChatActivity.class);
 
         // Set the view to fade in
         setFadeAnimation(viewHolder.itemView);
@@ -178,7 +178,7 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
 
         @Override
         public void onClick(View v) {
-            itemView.getContext().startActivity(new Intent(itemView.getContext(), EventsActivity.class));
+            itemView.getContext().startActivity(new Intent(itemView.getContext(), PTChatActivity.class));
             //itemView.getContext().startActivity(new Intent(itemView.getContext(), ChatMainActivity.class));
             //Toast.makeText(itemView.getContext(), "Show Chat window here !!", Toast.LENGTH_SHORT).show();
         }
