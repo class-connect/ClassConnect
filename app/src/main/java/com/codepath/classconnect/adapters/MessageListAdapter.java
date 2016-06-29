@@ -70,6 +70,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
             if(message.getPhoto()!=null && !message.getPhoto().equals(""))
             {
                 viewHolder.imageViewIcon.setVisibility(View.VISIBLE);
+
                 Picasso.with(getContext()).load(R.drawable.ic_launcher_attm).into(viewHolder.imageViewIcon);
             }
             else {

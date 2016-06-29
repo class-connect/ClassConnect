@@ -124,7 +124,7 @@ public class ChatMainActivity extends AppCompatActivity {
                         pFile.saveInBackground();
                         Toast.makeText(ChatMainActivity.this, "Image Saved file",
                                 Toast.LENGTH_SHORT).show();
-                        message.put("photo", pFile);
+                        message.setPhoto(pFile);
                         message.save();
                         Toast.makeText(ChatMainActivity.this, "Image Saved",
                                 Toast.LENGTH_SHORT).show();

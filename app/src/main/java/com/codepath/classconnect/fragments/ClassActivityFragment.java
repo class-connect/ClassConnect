@@ -180,8 +180,8 @@ public class ClassActivityFragment extends ClassListFragment implements SwipeRef
     Runnable mRefreshMessagesRunnable = new Runnable() {
         @Override
         public void run() {
-            populateTimeline();
-            mHandler.postDelayed(this, POLL_INTERVAL);
+            //populateTimeline();
+            //mHandler.postDelayed(this, POLL_INTERVAL);
         }
     };
     public void addNewPost(){

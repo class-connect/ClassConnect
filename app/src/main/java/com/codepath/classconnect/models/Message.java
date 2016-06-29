@@ -25,8 +25,9 @@ public class Message extends ParseObject {
 
 
     public Klass getKlass() {
-        return (Klass) getParseObject(KEY_KLASS);
+        return (Klass)getParseObject(KEY_KLASS);
     }
+
 
     public void setKlass(Klass klass) {
         put(KEY_KLASS, klass);
@@ -49,10 +50,11 @@ public class Message extends ParseObject {
     }
 
     public String getPhoto(){
-       return getString("photo");
 
+        ParseFile file =(ParseFile)get(KEY_PHOTO);
+        file.getName();
+        return  file.getUrl();
     }
-
     public void setPhoto(ParseFile pFile){
        put("photo", pFile);
 
