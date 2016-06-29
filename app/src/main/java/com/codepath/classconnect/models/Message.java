@@ -52,8 +52,12 @@ public class Message extends ParseObject {
     public String getPhoto(){
 
         ParseFile file =(ParseFile)get(KEY_PHOTO);
-        file.getName();
-        return  file.getUrl();
+        if (file != null) {
+            return file.getUrl();
+        }
+        else {
+            return null;
+        }
     }
     public void setPhoto(ParseFile pFile){
        put("photo", pFile);
