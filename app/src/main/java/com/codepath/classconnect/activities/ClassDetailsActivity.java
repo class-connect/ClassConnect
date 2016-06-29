@@ -28,7 +28,6 @@ public class ClassDetailsActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             ClassDetailFragment userHeaderFragment = ClassDetailFragment.newInstance(klassId);
-
             // Display user fragment in this activity - dynamic way
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.flContainer, userHeaderFragment);

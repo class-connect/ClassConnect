@@ -1,25 +1,19 @@
 package com.codepath.classconnect.activities;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.classconnect.R;
 import com.codepath.classconnect.fragments.ClassActivityFragment;
-import com.codepath.classconnect.fragments.ClassDetailFragment;
 import com.codepath.classconnect.fragments.ClassEventsFragment;
 
 public class EventsActivity extends AppCompatActivity {
@@ -28,12 +22,13 @@ public class EventsActivity extends AppCompatActivity {
     private static final int RESULT_OK = 200;
     // Instance of the progress action-view
     MenuItem miActionProgressItem;
-
+    String klassId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_events);
-
+        Intent i = getIntent();
+        klassId= i.getStringExtra("klassId");
         android.support.v7.app.ActionBar menu = getSupportActionBar();
         menu.setTitle("Class Activity");
         menu.setLogo(R.drawable.ic_back);
@@ -123,7 +118,8 @@ public class EventsActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return new ClassActivityFragment();
+                return ClassActivityFragment.newInstance(klassId);
+
             } else if (position == 1){
                 return new ClassEventsFragment();
             } else {

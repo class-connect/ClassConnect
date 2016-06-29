@@ -141,7 +141,7 @@ public class ChatMainActivity extends AppCompatActivity {
                     public void done(ParseException e) {
                         Toast.makeText(ChatMainActivity.this, "Successfully created message on Parse",
                                 Toast.LENGTH_SHORT).show();
-                        //refreshMessages();
+
                     }
                 });
                 etText.setText(null);

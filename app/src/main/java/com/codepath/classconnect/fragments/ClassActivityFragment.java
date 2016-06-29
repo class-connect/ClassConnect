@@ -59,8 +59,11 @@ public class ClassActivityFragment extends ClassListFragment implements SwipeRef
         populateClassActivity(page);
     }
 
-    public static ClassActivityFragment newInstance() {
+    public static ClassActivityFragment newInstance(String klassId) {
         ClassActivityFragment userFragment = new ClassActivityFragment();
+        Bundle args = new Bundle();
+        args.putString("klassId", klassId);
+        userFragment.setArguments(args);
         return userFragment;
     }
 
@@ -139,7 +142,7 @@ public class ClassActivityFragment extends ClassListFragment implements SwipeRef
             // Configure limit and sort order
             query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
             query.orderByAscending("createdAt");
-            String KEY_KLASS = "LGLI6ZDCFy";
+            String KEY_KLASS = getArguments().getString("klassId");
             // Execute query to fetch all messages from Parse asynchronously
             // This is equivalent to a SELECT query with SQL
             Klass.findByCode(KEY_KLASS, new FindCallback<Klass>() {
