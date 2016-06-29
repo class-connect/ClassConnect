@@ -21,11 +21,11 @@ public class Message extends ParseObject {
     public static final String KEY_USER = "user";
     public static final String KEY_BODY = "body";
     public static final String KEY_CREATED_AT = "createdAt";
-    public static final String KEY_PHOTO ="photo";
+    public static final String KEY_PHOTO = "photo";
 
 
     public Klass getKlass() {
-        return (Klass)getParseObject(KEY_KLASS);
+        return (Klass) getParseObject(KEY_KLASS);
     }
 
 
@@ -49,9 +49,8 @@ public class Message extends ParseObject {
         put(KEY_BODY, body);
     }
 
-    public String getPhoto(){
-
-        ParseFile file =(ParseFile)get(KEY_PHOTO);
+    public String getPhoto() {
+        ParseFile file = (ParseFile) get(KEY_PHOTO);
         if (file != null) {
             return file.getUrl();
         }
@@ -59,8 +58,9 @@ public class Message extends ParseObject {
             return null;
         }
     }
-    public void setPhoto(ParseFile pFile){
-       put("photo", pFile);
+
+    public void setPhoto(ParseFile pFile) {
+        put("photo", pFile);
 
     }
 

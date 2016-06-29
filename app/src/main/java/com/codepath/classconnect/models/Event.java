@@ -6,6 +6,8 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -86,6 +88,30 @@ public class Event extends ParseObject {
     public String getProfileUrl() {
         AppUser user = getUser();
         return user != null ? user.getProfileUrl() : null;
+    }
+
+    public String getEventTime() {
+        SimpleDateFormat fmt = new SimpleDateFormat("EEE, MMM dd, hh:mm a");
+        Date startDate = getStartTime();
+        String start = fmt.format(startDate);
+        Date endDate = getEndTime();
+        String end;
+        if (isSameDay(startDate, endDate)) {
+            fmt = new SimpleDateFormat("hh:mm a");
+            end = fmt.format(endDate);
+        }
+        else {
+            end = fmt.format(endDate);
+        }
+        return String.format("%s to %s", start, end);
+    }
+
+    private boolean isSameDay(Date start, Date end) {
+        Calendar startCal = Calendar.getInstance();
+        startCal.setTime(start);
+        Calendar endCal = Calendar.getInstance();
+        endCal.setTime(end);
+        return (startCal.get(Calendar.YEAR) == endCal.get(Calendar.YEAR) && startCal.get(Calendar.DAY_OF_YEAR) == endCal.get(Calendar.DAY_OF_YEAR));
     }
 
     public static void findByObjectId(String objectId, GetCallback<Event> callback) {

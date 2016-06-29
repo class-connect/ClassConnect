@@ -1,6 +1,7 @@
 package com.codepath.classconnect.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -21,9 +22,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -46,8 +44,13 @@ public class EventDetailsActivity extends AppCompatActivity implements OnMapRead
 
         ButterKnife.bind(this);
 
-        // TODO: Get from intent
-        String eventId = "TebPDG6jCH";
+        Intent intent = getIntent();
+        String eventId = intent.getStringExtra("eventId");
+
+        // TODO: Remove this if when events are wired up to the activity
+        if (eventId == null) {
+            eventId = "8Xp7zaaBkN";
+        }
 
         Event.findByObjectId(eventId, new GetCallback<Event>() {
             @Override
@@ -63,7 +66,7 @@ public class EventDetailsActivity extends AppCompatActivity implements OnMapRead
                         flMapContainer.setVisibility(View.GONE);
                     }
                     tvName.setText(event.getName());
-                    tvTime.setText(formatTime(event));
+                    tvTime.setText(event.getEventTime());
                     tvNotes.setText(event.getNotes());
                     tvLocation.setText(event.getLocation());
                     if (TextUtils.isEmpty(event.getNotes())) {
@@ -75,30 +78,6 @@ public class EventDetailsActivity extends AppCompatActivity implements OnMapRead
                 }
             }
         });
-    }
-
-    private String formatTime(Event event) {
-        SimpleDateFormat fmt = new SimpleDateFormat("EEE, MMM dd, hh:mm a");
-        Date startDate = event.getStartTime();
-        String start = fmt.format(startDate);
-        Date endDate = event.getEndTime();
-        String end;
-        if (isSameDay(startDate, endDate)) {
-            fmt = new SimpleDateFormat("hh:mm a");
-            end = fmt.format(endDate);
-        }
-        else {
-            end = fmt.format(endDate);
-        }
-        return String.format("%s to %s", start, end);
-    }
-
-    private boolean isSameDay(Date start, Date end) {
-        Calendar startCal = Calendar.getInstance();
-        startCal.setTime(start);
-        Calendar endCal = Calendar.getInstance();
-        endCal.setTime(end);
-        return (startCal.get(Calendar.YEAR) == endCal.get(Calendar.YEAR) && startCal.get(Calendar.DAY_OF_YEAR) == endCal.get(Calendar.DAY_OF_YEAR));
     }
 
     @Override
