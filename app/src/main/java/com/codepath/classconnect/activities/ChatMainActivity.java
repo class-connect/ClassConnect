@@ -125,8 +125,7 @@ public class ChatMainActivity extends AppCompatActivity {
                 // Ensure bmp has value
                 if (bmp == null || BmpFileName == null) {
                     Log.d ("Error" , "Problem with image");
-                    Toast.makeText(ChatMainActivity.this, "No image..",
-                            Toast.LENGTH_SHORT).show();
+                    
                 }else{
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -148,14 +147,7 @@ public class ChatMainActivity extends AppCompatActivity {
                             }
                         });
                         message.setPhoto(pFile);
-                        message.saveInBackground(new SaveCallback() {
-                            @Override
-                            public void done(ParseException e) {
-                                Toast.makeText(ChatMainActivity.this, "Successfully created message on Parse",
-                                        Toast.LENGTH_SHORT).show();
-                                ChatMainActivity.this.finish();
-                            }
-                        });
+
                     }
                     //catch (ParseException e)
                     catch (Exception e)
@@ -165,6 +157,15 @@ public class ChatMainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
+
+                message.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        Toast.makeText(ChatMainActivity.this, "Successfully created message on Parse",
+                                Toast.LENGTH_SHORT).show();
+                        ChatMainActivity.this.finish();
+                    }
+                });
 
                 etText.setText(null);
             }
