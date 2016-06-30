@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -49,6 +50,11 @@ public class NewEventActivity extends AppCompatActivity {
     @BindView(R.id.etNotes) EditText etNotes;
     @BindView(R.id.etLocation) EditText etLocation;
 
+    @BindView(R.id.startDateWrapper) TextInputLayout startDateWrapper;
+    @BindView(R.id.endDateWrapper) TextInputLayout endDateWrapper;
+    @BindView(R.id.startTimeWrapper) TextInputLayout startTimeWrapper;
+    @BindView(R.id.endTimeWrapper) TextInputLayout endTimeWrapper;
+
     private Klass klass;
     private Date startDate;
     private Date endDate;
@@ -91,18 +97,55 @@ public class NewEventActivity extends AppCompatActivity {
         event.setName(etEventName.getText().toString());
         event.setNotes(etNotes.getText().toString());
         event.setLocation(etLocation.getText().toString());
-        if (!TextUtils.isEmpty(etStartDate.getText().toString())) {
-            event.setStartTime(startDate);
-        }
-        if (!TextUtils.isEmpty(etEndDate.getText().toString())) {
-            event.setEndTime(endDate);
-        }
-        event.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(com.parse.ParseException e) {
-                finish();
+        if (isValid()) {
+            if (!TextUtils.isEmpty(etStartDate.getText().toString())) {
+                event.setStartTime(startDate);
             }
-        });
+            if (!TextUtils.isEmpty(etEndDate.getText().toString())) {
+                event.setEndTime(endDate);
+            }
+            event.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(com.parse.ParseException e) {
+                    finish();
+                }
+            });
+        }
+    }
+
+    private boolean isValid() {
+        boolean isValid = true;
+        if (TextUtils.isEmpty(etStartDate.getText().toString())) {
+            startDateWrapper.setError("Enter start date");
+            isValid = false;
+        }
+        if (TextUtils.isEmpty(etStartTime.getText().toString())) {
+            startTimeWrapper.setError("Enter start time");
+            isValid = false;
+        }
+        if (TextUtils.isEmpty(etEndDate.getText().toString())) {
+            endDateWrapper.setError("Enter end date");
+            isValid = false;
+        }
+        if (TextUtils.isEmpty(etEndTime.getText().toString())) {
+            endTimeWrapper.setError("Enter end time");
+            isValid = false;
+        }
+
+        if (startDate.after(endDate)) {
+            startDateWrapper.setError("Start date has to be before end date");
+            isValid = false;
+        }
+
+        if (isValid) {
+            // clear all errors
+            startDateWrapper.setError(null);
+            startTimeWrapper.setError(null);
+            endDateWrapper.setError(null);
+            endTimeWrapper.setError(null);
+        }
+
+        return isValid;
     }
 
     public void showPlacePicker(View view) {
