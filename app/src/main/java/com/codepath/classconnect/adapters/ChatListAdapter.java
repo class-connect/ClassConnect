@@ -71,8 +71,7 @@ public class ChatListAdapter extends ArrayAdapter<Message> {
             e.printStackTrace();
         }
 
-        System.out.println("http://www.gravatar.com/avatar/" + hex + "?d=identicon");
-        return "http://www.gravatar.com/avatar/" + hex + "?d=identicon";
+        return ""; //http://www.gravatar.com/avatar/" + hex + "?d=identicon";
     }
 
     final class ViewHolder {

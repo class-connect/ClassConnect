@@ -75,7 +75,7 @@ public class Message extends ParseObject {
     }
 
     public String getRelativeTime() {
-        Date date = getDate(KEY_CREATED_AT);
+        Date date = getCreatedAt();
         long now = System.currentTimeMillis();
         String relativeDate = DateUtils.getRelativeTimeSpanString(date.getTime(), now, DateUtils.SECOND_IN_MILLIS).toString();
         return formatRelativeDate(relativeDate);

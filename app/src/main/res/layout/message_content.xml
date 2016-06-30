@@ -3,18 +3,21 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".activities.TimelineActivity"
+    tools:context=".activities.ChatMainActivity"
+    android:padding="10dp"
     android:weightSum="1">
     <TextView
         android:id="@+id/tvUsernName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Title"
-        android:textSize="18sp"
+        android:textSize="14sp"
+        android:textStyle="bold"
         android:layout_gravity="center_horizontal"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ivUserCover"
-        android:layout_toEndOf="@+id/ivUserCover" />
+        android:layout_toEndOf="@+id/ivUserCover"
+        android:src="@mipmap/ic_launcher_attm"/>
 
     <TextView
         android:id="@+id/tvBody"
@@ -23,16 +26,20 @@
         android:text="Author"
         android:textSize="13sp"
         android:layout_gravity="center_horizontal"
+        android:ellipsize="end"
+        android:maxLines="3"
         android:layout_toRightOf="@+id/ivUserCover"
         android:layout_toEndOf="@+id/ivUserCover"
         android:layout_below="@+id/tvUsernName" />
 
     <ImageView
         android:id="@+id/ivUserCover"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-
-        />
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@mipmap/ic_launcher_attm"
+        android:layout_alignParentLeft="true"
+        android:layout_marginRight="10dp"
+        android:layout_alignParentStart="true" />
 
     <ImageView
         android:layout_width="40dp"
@@ -43,5 +50,27 @@
         android:layout_alignRight="@+id/tvUsernName"
         android:layout_alignEnd="@+id/tvUsernName"
         />
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvImageViewIcon"
+        android:textSize="9dp"
+        android:textStyle="italic"
+        android:layout_below="@+id/tvBody"
+        android:layout_toRightOf="@+id/ivUserCover"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Relative Time"
+        android:id="@+id/tvRelativeTime"
+        android:textColor="#8899a6"
+        android:textSize="12dp"
+        android:textIsSelectable="true"
+        android:layout_above="@+id/tvBody"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

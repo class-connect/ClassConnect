@@ -14,6 +14,8 @@ import com.codepath.classconnect.activities.MessageDetailsActivity;
 import com.codepath.classconnect.models.Message;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
@@ -27,6 +29,8 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
             public TextView tvUsernName;
             public TextView body;
             public ImageView ivCover;
+            public TextView tvRelativeTime;
+            public TextView tvImageViewIcon;
         }
         // Define listener member variable
         private static OnItemClickListener listener;
@@ -59,6 +63,8 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
                 viewHolder.tvUsernName = (TextView)convertView.findViewById(R.id.tvUsernName);
                 viewHolder.body = (TextView)convertView.findViewById(R.id.tvBody);
                 viewHolder.imageViewIcon = (ImageView)convertView.findViewById(R.id.imageViewIcon);
+                viewHolder.tvRelativeTime = (TextView)convertView.findViewById(R.id.tvRelativeTime);
+                viewHolder.tvImageViewIcon = (TextView)convertView.findViewById(R.id.tvImageViewIcon);
                 convertView.setTag(viewHolder);
 
             } else {
@@ -67,7 +73,7 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
             //Populate data into the template view using the data object
             viewHolder.tvUsernName.setText(message.getUser().getName());
             viewHolder.body.setText(message.getBody());
-            if(message.getPhoto()!=null && !message.getPhoto().equals(""))
+            /*if(message.getPhoto()!=null && !message.getPhoto().equals(""))
             {
                 viewHolder.imageViewIcon.setVisibility(View.VISIBLE);
                 //Picasso.with(getContext()).load(R.drawable.ic_launcher_attm).into(viewHolder.imageViewIcon);
@@ -76,10 +82,9 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
             else {
                 viewHolder.imageViewIcon.setVisibility(View.GONE);
 
-            }
+            }*/
             Picasso.with(getContext()).load(message.getUser().getProfileUrl()).
                     transform(new RoundedCornersTransformation(5,5)).into(viewHolder.ivCover);
-
 
             convertView.setOnClickListener(new View.OnClickListener()
             {
@@ -90,6 +95,12 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
                     v.getContext().startActivity(myIntent);
                 }
             });
+            viewHolder.tvRelativeTime.setText(message.getRelativeTime());
+            if(message.getPhoto()!=null && !message.getPhoto().equals("")) {
+                viewHolder.tvImageViewIcon.setText("See details to check attachment");
+            } else {
+                viewHolder.tvImageViewIcon.setText("");
+            }
             //Picasso.with(getContext()).load(book.getPosterUrl()).into(viewHolder.ivCover);
             // Return the completed view to render on screen
             return convertView;

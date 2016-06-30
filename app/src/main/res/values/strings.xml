@@ -28,4 +28,6 @@
     <string name="add_message">New Message</string>
     <string name="btnCancel">Cancel</string>
     <string name="tweetHint">Post a message</string>
+    <string name="new_message">Message Details</string>
+    <string name="new_event">Event Details</string>
 </resources>

@@ -7,6 +7,7 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -44,13 +45,14 @@ public class EventDetailsActivity extends AppCompatActivity implements OnMapRead
 
         ButterKnife.bind(this);
 
+        android.support.v7.app.ActionBar menu = getSupportActionBar();
+        menu.setTitle(R.string.new_event);
+        menu.setLogo(R.drawable.ic_back);
+        menu.setDisplayHomeAsUpEnabled(true);
+
         Intent intent = getIntent();
         String eventId = intent.getStringExtra("eventId");
 
-        // TODO: Remove this if when events are wired up to the activity
-        if (eventId == null) {
-            eventId = "8Xp7zaaBkN";
-        }
 
         Event.findByObjectId(eventId, new GetCallback<Event>() {
             @Override
@@ -105,4 +107,36 @@ public class EventDetailsActivity extends AppCompatActivity implements OnMapRead
 
         return null;
     }
+
+    // onBackPressed is what is called when back is hit, call `overridePendingTransition`
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.left_in, R.anim.right_out);
+    }
+
+    // to handle activity transitions for Up navigation add it to the onOptionsItemSelected
+    // as below
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        // This refers to the Up navigation button in the action bar
+        if (id == android.R.id.home) {
+            finish();
+            overridePendingTransition(R.anim.left_in, R.anim.right_out);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }

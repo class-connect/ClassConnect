@@ -30,7 +30,7 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
  */
 public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> {
         //ArrayAdapter<KlassRegistration> {
-    private final static int FADE_DURATION = 10000; // in milliseconds
+    private final static int FADE_DURATION = 1000; // in milliseconds
     Context m_context;
     // Store a member variable for the contacts
     private List<KlassRegistration> mClasses;
