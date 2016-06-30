@@ -139,13 +139,18 @@ public class NewEventActivity extends AppCompatActivity {
 
         if (isValid) {
             // clear all errors
-            startDateWrapper.setError(null);
-            startTimeWrapper.setError(null);
-            endDateWrapper.setError(null);
-            endTimeWrapper.setError(null);
+            clearError(startDateWrapper);
+            clearError(startTimeWrapper);
+            clearError(endDateWrapper);
+            clearError(endTimeWrapper);
         }
 
         return isValid;
+    }
+
+    private void clearError(TextInputLayout t) {
+        t.setError(null);
+        t.setErrorEnabled(false);
     }
 
     public void showPlacePicker(View view) {
