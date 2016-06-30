@@ -37,7 +37,6 @@
         android:id="@+id/btSend"
         android:textAllCaps="false"
         android:padding="10dp"
-        android:background="@drawable/blue_button_states"
         android:textColor="#FFFFFFFF"
         android:layout_gravity="right"
         android:textAlignment="center"
