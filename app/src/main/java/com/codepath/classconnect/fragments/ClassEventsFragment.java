@@ -109,11 +109,11 @@ public class ClassEventsFragment extends ClassListFragment implements SwipeRefre
                                 events.clear();
                                 events.addAll(eventObjs);
                                 eventListAdapter.notifyDataSetChanged();
-
                             }
                             else {
                                 Log.e("message", "Error Loading Events" + e);
                             }
+                            swipeContainer.setRefreshing(false);
                         }
                     });
                 }

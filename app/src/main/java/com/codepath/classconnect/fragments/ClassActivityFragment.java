@@ -31,16 +31,17 @@ import java.util.List;
 public class ClassActivityFragment extends ClassListFragment implements SwipeRefreshLayout.OnRefreshListener {
     private SwipeRefreshLayout swipeContainer;
     ListView lvTimeline;
-    private MessageListAdapter messageListAdapter ;
+    private MessageListAdapter messageListAdapter;
     private ArrayList<Message> messages;
     private long max_id_page = 0;
     private int page;
     boolean mFirstLoad;
     Handler mHandler = new Handler();  // android.os.Handler
-    private final int REQUEST_CODE=1001;
+    private final int REQUEST_CODE = 1001;
 
     static final int MAX_CHAT_MESSAGES_TO_SHOW = 500;
     static final int POLL_INTERVAL = 10000; // milliseconds
+
     //inflation logic and
     //creation life cycle event
     @Override
@@ -71,12 +72,13 @@ public class ClassActivityFragment extends ClassListFragment implements SwipeRef
     private void populateClassActivity(int sinceId) {
 
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_message_list,parent,false);
+        View view = inflater.inflate(R.layout.fragment_message_list, parent, false);
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.activity_main_swipe_refresh_layout);
-        lvTimeline= (ListView)view.findViewById(R.id.lvTweets);
+        lvTimeline = (ListView) view.findViewById(R.id.lvTweets);
         // Setup refresh listener which triggers new data loading
         swipeContainer.setOnRefreshListener(this);
         // Configure the refreshing colors
@@ -85,9 +87,9 @@ public class ClassActivityFragment extends ClassListFragment implements SwipeRef
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        messageListAdapter = new MessageListAdapter(getActivity(),messages);
+        messageListAdapter = new MessageListAdapter(getActivity(), messages);
         lvTimeline.setAdapter(messageListAdapter);
-        ImageButton fab = (ImageButton)view.findViewById(R.id.fabMessage);
+        ImageButton fab = (ImageButton) view.findViewById(R.id.fabMessage);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,12 +97,13 @@ public class ClassActivityFragment extends ClassListFragment implements SwipeRef
             }
         });
 
-        lvTimeline.setOnScrollListener(new EndlessRecylcerScrollerListener(){
+        lvTimeline.setOnScrollListener(new EndlessRecylcerScrollerListener() {
             @Override
             public boolean onLoadMore(int page, int totalItemsCount) {
                 populateTimeline();
                 return true;
             }
+
             @Override
             public int getFooterViewType() {
                 return 0;
@@ -120,12 +123,11 @@ public class ClassActivityFragment extends ClassListFragment implements SwipeRef
 
         return view;
     }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         //this is where we do our lookups
         //and initialization
-
-
     }
 
     @Override
@@ -135,45 +137,48 @@ public class ClassActivityFragment extends ClassListFragment implements SwipeRef
 
     //make an async request and list view
     private void populateTimeline() {
-            // Construct query to execute
-            ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
-            // Configure limit and sort order
-            query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-            query.orderByAscending("createdAt");
-            String KEY_KLASS = getArguments().getString("klassId");
-            // Execute query to fetch all messages from Parse asynchronously
-            // This is equivalent to a SELECT query with SQL
-            Klass.findByCode(KEY_KLASS, new FindCallback<Klass>() {
-                @Override
-                public void done(List<Klass> objects, ParseException e) {
-                    if (e == null) {
-                        if (objects == null || objects.isEmpty()) {
-                        }
-                        else {
-                            // there should be only one class
-                            final Klass klass = objects.get(0);
-                            Message.findAll(klass,new FindCallback<Message>() {
-                                public void done(List<Message> messageObjects, ParseException e) {
-                                    if (e == null) {
-                                        messages.clear();
-                                        messages.addAll(messageObjects);
-                                        messageListAdapter.notifyDataSetChanged(); // update adapter
-
-                                    } else {
-                                        Log.e("message", "Error Loading Messages" + e);
-                                    }
-                                }
-                            });
-                        }
+        // Construct query to execute
+        ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
+        // Configure limit and sort order
+        query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
+        query.orderByAscending("createdAt");
+        String KEY_KLASS = getArguments().getString("klassId");
+        // Execute query to fetch all messages from Parse asynchronously
+        // This is equivalent to a SELECT query with SQL
+        Klass.findByCode(KEY_KLASS, new FindCallback<Klass>() {
+            @Override
+            public void done(List<Klass> objects, ParseException e) {
+                if (e == null) {
+                    if (objects == null || objects.isEmpty()) {
                     }
                     else {
-                        Log.e("message", "Error Loading Messages" + e);
+                        // there should be only one class
+                        final Klass klass = objects.get(0);
+                        Message.findAll(klass, new FindCallback<Message>() {
+                            public void done(List<Message> messageObjects, ParseException e) {
+                                if (e == null) {
+                                    messages.clear();
+                                    messages.addAll(messageObjects);
+                                    messageListAdapter.notifyDataSetChanged(); // update adapter
+
+                                }
+                                else {
+                                    Log.e("message", "Error Loading Messages" + e);
+                                }
+                                swipeContainer.setRefreshing(false);
+                            }
+                        });
                     }
                 }
-            });
+                else {
+                    Log.e("message", "Error Loading Messages" + e);
+                }
+            }
+        });
 
 
     }
+
     Runnable mRefreshMessagesRunnable = new Runnable() {
         @Override
         public void run() {
@@ -181,16 +186,20 @@ public class ClassActivityFragment extends ClassListFragment implements SwipeRef
             //mHandler.postDelayed(this, POLL_INTERVAL);
         }
     };
-    public void addNewPost(){
 
-            Intent i = new Intent(this.getActivity(), ChatMainActivity.class);
-            String KEY_KLASS = getArguments().getString("klassId");
-            i.putExtra("klassId",KEY_KLASS);
-            startActivityForResult(i, REQUEST_CODE);
-            // overridePendingTransition(R.anim.right_in, R.anim.left_out);
+    public void addNewPost() {
+        Intent i = new Intent(this.getActivity(), ChatMainActivity.class);
+        String KEY_KLASS = getArguments().getString("klassId");
+        i.putExtra("klassId", KEY_KLASS);
+        startActivityForResult(i, REQUEST_CODE);
+        // overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        populateTimeline();
     }
+}
 
 
 

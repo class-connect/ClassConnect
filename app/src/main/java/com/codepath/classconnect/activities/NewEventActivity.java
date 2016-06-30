@@ -107,6 +107,7 @@ public class NewEventActivity extends AppCompatActivity {
             event.saveInBackground(new SaveCallback() {
                 @Override
                 public void done(com.parse.ParseException e) {
+                    setResult(RESULT_OK, new Intent());
                     finish();
                 }
             });
@@ -172,6 +173,7 @@ public class NewEventActivity extends AppCompatActivity {
                 }
             }
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public void showDatePickerDialog(View v) {
