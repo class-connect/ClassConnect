@@ -15,6 +15,8 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.classconnect.R;
 import com.codepath.classconnect.fragments.ClassActivityFragment;
 import com.codepath.classconnect.fragments.ClassEventsFragment;
+import com.codepath.classconnect.models.Klass;
+import com.parse.GetCallback;
 
 public class PTChatActivity extends AppCompatActivity {
 
@@ -31,8 +33,16 @@ public class PTChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_events);
         Intent i = getIntent();
         klassId= i.getStringExtra("klassId");
-        android.support.v7.app.ActionBar menu = getSupportActionBar();
-        menu.setTitle("Class Activity");
+
+        final android.support.v7.app.ActionBar menu = getSupportActionBar();
+        Klass.findByObjectId(klassId, new GetCallback<Klass>() {
+            @Override
+            public void done(Klass object, com.parse.ParseException e) {
+                menu.setTitle(object.getName());
+            }
+        });
+
+
         menu.setLogo(R.drawable.ic_back);
         menu.setDisplayHomeAsUpEnabled(true);
 
