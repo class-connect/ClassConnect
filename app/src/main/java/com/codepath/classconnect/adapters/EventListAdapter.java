@@ -23,6 +23,7 @@ public class EventListAdapter  extends ArrayAdapter<Event> {
         public TextView tvEventName;
         public TextView tvEventNote;
         public TextView tvEventLocation;
+        public TextView tvEventTime;
     }
 
     public EventListAdapter(Context context, ArrayList<Event> events) {
@@ -41,7 +42,8 @@ public class EventListAdapter  extends ArrayAdapter<Event> {
             convertView = inflater.inflate(R.layout.event_item, parent, false);
             viewHolder.tvEventName = (TextView)convertView.findViewById(R.id.tvEventName);
             viewHolder.tvEventNote = (TextView)convertView.findViewById(R.id.tvEventNotes);
-            viewHolder.tvEventLocation = (TextView)convertView.findViewById(R.id.tvLocation);
+            viewHolder.tvEventLocation = (TextView)convertView.findViewById(R.id.tvEventLocation);
+            viewHolder.tvEventTime = (TextView) convertView.findViewById(R.id.tvEventTime);
             convertView.setTag(viewHolder);
 
         } else {
@@ -51,6 +53,7 @@ public class EventListAdapter  extends ArrayAdapter<Event> {
         viewHolder.tvEventName.setText(event.getName());
         viewHolder.tvEventNote.setText(event.getNotes());
         viewHolder.tvEventLocation.setText(event.getLocation());
+        viewHolder.tvEventTime.setText(event.getEventTime());
 
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override

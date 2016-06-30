@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:padding="10dp"
-    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:layout_height="wrap_content"
     android:weightSum="1">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -17,11 +17,10 @@
         <ImageView
             android:id="@+id/ivTeacherImage"
             android:layout_width="90dp"
-            android:layout_height="80dp"
+            android:layout_height="90dp"
             android:adjustViewBounds="true"
+            android:layout_marginRight="10dp"
             android:layout_alignParentTop="true"
-            android:layout_margin="5dp"
-            android:src="@android:color/holo_red_dark"
             android:layout_weight="0.02" />
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -47,7 +46,6 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/ivTeacherImage"
                 android:layout_below="@id/tvKlassName"
-                style="@style/TextStyle.Small"
                 tools:text="Ms. Johnson"
                 android:paddingTop="5dp" />
         </LinearLayout>
@@ -65,7 +63,6 @@
         android:id="@+id/tvClassDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/TextStyle.Small"
         tools:text="Ms. Johnson"
         android:paddingTop="5dp" />
 
@@ -81,7 +78,6 @@
         android:id="@+id/tvTeacherBio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/TextStyle.Small"
         tools:text="Bio"
         android:paddingTop="5dp" />
 

@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -65,6 +66,12 @@ public class ChatMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_main);
         AppUser appUser = UserManager.getCurrentUser();
+
+        android.support.v7.app.ActionBar menu = getSupportActionBar();
+        menu.setTitle(R.string.add_message);
+        menu.setLogo(R.drawable.ic_back);
+        menu.setDisplayHomeAsUpEnabled(true);
+
         // User login
         if (appUser!= null) { // start with existing user
             setupMessagePosting(appUser);
@@ -148,6 +155,7 @@ public class ChatMainActivity extends AppCompatActivity {
             }
         });
     }
+
     void refreshMessages() {
         // Construct query to execute
         ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
@@ -192,6 +200,7 @@ public class ChatMainActivity extends AppCompatActivity {
             }
         });
     }
+
     Runnable mRefreshMessagesRunnable = new Runnable() {
         @Override
         public void run() {
@@ -220,6 +229,7 @@ public class ChatMainActivity extends AppCompatActivity {
             startActivityForResult(i, 0);
         }
     }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
@@ -239,6 +249,34 @@ public class ChatMainActivity extends AppCompatActivity {
         }
     }
 
+    // onBackPressed is what is called when back is hit, call `overridePendingTransition`
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.left_in, R.anim.right_out);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        // This refers to the Up navigation button in the action bar
+        if (id == android.R.id.home) {
+            finish();
+            overridePendingTransition(R.anim.left_in, R.anim.right_out);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 
 }

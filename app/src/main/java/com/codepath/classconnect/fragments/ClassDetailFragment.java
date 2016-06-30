@@ -15,6 +15,8 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.squareup.picasso.Picasso;
 
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
+
 /**
  * Created by adeshpa on 6/25/16.
  */
@@ -61,7 +63,12 @@ public class ClassDetailFragment extends Fragment {
         Klass.findByObjectId(klassId, new GetCallback<Klass>() {
             @Override
             public void done(Klass klass, ParseException e) {
-                Picasso.with(getActivity()).load(klass.getProfileUrl()).into(ivTeacherImage);
+                Picasso.with(getActivity())
+                        .load(klass.getProfileUrl())
+                        .transform(new RoundedCornersTransformation(2, 2))
+                        .error(R.drawable.progress_animation)
+                        .placeholder(R.drawable.progress_animation)
+                        .into(ivTeacherImage);
                 tvKlassName.setText(klass.getName().toString());
                 tvTeacherName.setText(klass.getTeacherName().toString());
                 tvClassDescription.setText(klass.getDescription().toString());
