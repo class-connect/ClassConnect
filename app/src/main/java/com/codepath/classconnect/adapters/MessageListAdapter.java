@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.classconnect.R;
-import com.codepath.classconnect.activities.ChatMainActivity;
+import com.codepath.classconnect.activities.MessageDetailsActivity;
 import com.codepath.classconnect.models.Message;
 import com.squareup.picasso.Picasso;
 
@@ -70,23 +70,23 @@ public class MessageListAdapter extends ArrayAdapter<Message> {
             if(message.getPhoto()!=null && !message.getPhoto().equals(""))
             {
                 viewHolder.imageViewIcon.setVisibility(View.VISIBLE);
-
-                Picasso.with(getContext()).load(R.drawable.ic_launcher_attm).into(viewHolder.imageViewIcon);
+                //Picasso.with(getContext()).load(R.drawable.ic_launcher_attm).into(viewHolder.imageViewIcon);
+                Picasso.with(getContext()).load(message.getPhoto()).transform(new RoundedCornersTransformation(5,5)).error(R.drawable.progress_animation).placeholder(R.drawable.progress_animation).into(viewHolder.imageViewIcon);
             }
             else {
                 viewHolder.imageViewIcon.setVisibility(View.GONE);
-            }
 
+            }
             Picasso.with(getContext()).load(message.getUser().getProfileUrl()).
                     transform(new RoundedCornersTransformation(5,5)).into(viewHolder.ivCover);
-            viewHolder.ivCover.setOnClickListener(new View.OnClickListener()
+
+
+            convertView.setOnClickListener(new View.OnClickListener()
             {
                 public void onClick(View v)
                 {
-                    Intent myIntent = new Intent(v.getContext(), ChatMainActivity.class);
-                    System.out.println();
-
-                    myIntent.putExtra("klassObjectId",message.getKlass().getObjectId());
+                    Intent myIntent = new Intent(v.getContext(), MessageDetailsActivity.class);
+                    myIntent.putExtra("messageObjectId",message.getObjectId());
                     v.getContext().startActivity(myIntent);
                 }
             });

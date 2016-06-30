@@ -8,55 +8,50 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ChatMainActivity">
-    <ListView
-        android:id="@+id/lvChat"
-        android:transcriptMode="alwaysScroll"
-        android:layout_alignParentTop="true"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/eventNameWrapper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_above="@+id/llSend"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
-    <RelativeLayout
-        android:id="@+id/llSend"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:paddingTop="5dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="0dp"
-        android:paddingRight="0dp"
-        android:layout_height="wrap_content" >
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:hint="@string/message_hint"
+        android:layout_marginTop="67dp"
+        >
+
         <EditText
             android:id="@+id/etMessage"
-            android:layout_toLeftOf="@+id/btSend"
-            android:layout_alignBottom="@+id/btSend"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="top"
-            android:hint="@string/message_hint"
-            android:inputType="textShortMessage"
-            android:imeOptions="actionSend"
-            />
+            android:layout_height="match_parent"
+        />
+    </android.support.design.widget.TextInputLayout>
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ibCamera"
+        android:src="@android:drawable/ic_menu_camera"
+        android:layout_marginTop="36dp"
+        android:layout_below="@+id/eventNameWrapper"
+        android:layout_centerHorizontal="true" />
 
-        <Button
-            android:id="@+id/btSend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical|right"
-            android:paddingRight="10dp"
-            android:layout_alignParentRight="true"
-            android:text="@string/send"
-            android:textSize="18sp" >
-        </Button>
+    <Button
+        android:id="@+id/btSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center"
+        android:paddingRight="10dp"
+        android:text="@string/send"
+        android:textSize="18sp"
+        android:layout_below="@+id/ibCamera"
+        android:layout_marginTop="38dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="false"
+        android:layout_alignRight="@+id/eventNameWrapper"
+        android:layout_alignEnd="@+id/eventNameWrapper">
+    </Button>
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/ibCamera"
-            android:src="@android:drawable/ic_menu_camera"
-            android:layout_alignBottom="@+id/btSend"
-            android:layout_toLeftOf="@+id/btSend"
-            android:layout_toStartOf="@+id/btSend" />
 
-    </RelativeLayout>
+
 </RelativeLayout>

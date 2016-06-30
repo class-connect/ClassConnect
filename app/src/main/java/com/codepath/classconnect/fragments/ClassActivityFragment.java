@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.classconnect.R;
 import com.codepath.classconnect.activities.ChatMainActivity;
 import com.codepath.classconnect.adapters.MessageListAdapter;
@@ -99,7 +98,6 @@ public class ClassActivityFragment extends ClassListFragment implements SwipeRef
         lvTimeline.setOnScrollListener(new EndlessRecylcerScrollerListener(){
             @Override
             public boolean onLoadMore(int page, int totalItemsCount) {
-                System.out.println("739633557509918721 ON load more "+page +":::max_id_page"+max_id_page);
                 populateTimeline();
                 return true;
             }
@@ -154,7 +152,6 @@ public class ClassActivityFragment extends ClassListFragment implements SwipeRef
                         else {
                             // there should be only one class
                             final Klass klass = objects.get(0);
-                            System.out.println("klass object in class actvity Fragment"+klass.getProfileUrl()+"klass.getObjectID"+klass.getObjectId());
                             Message.findAll(klass,new FindCallback<Message>() {
                                 public void done(List<Message> messageObjects, ParseException e) {
                                     if (e == null) {
@@ -185,7 +182,10 @@ public class ClassActivityFragment extends ClassListFragment implements SwipeRef
         }
     };
     public void addNewPost(){
+
             Intent i = new Intent(this.getActivity(), ChatMainActivity.class);
+            String KEY_KLASS = getArguments().getString("klassId");
+            i.putExtra("klassId",KEY_KLASS);
             startActivityForResult(i, REQUEST_CODE);
             // overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }

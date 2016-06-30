@@ -1,5 +1,6 @@
 package com.codepath.classconnect.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -14,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.codepath.classconnect.R;
@@ -23,11 +23,10 @@ import com.codepath.classconnect.adapters.ChatListAdapter;
 import com.codepath.classconnect.models.AppUser;
 import com.codepath.classconnect.models.Klass;
 import com.codepath.classconnect.models.Message;
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
-import com.parse.ParseQuery;
+import com.parse.ProgressCallback;
 import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
@@ -36,7 +35,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 /**
  * Created by aramar1 on 6/2/16.
  */
@@ -46,7 +44,7 @@ public class ChatMainActivity extends AppCompatActivity {
     static final String TAG = ChatMainActivity.class.getSimpleName();
     EditText etText;
     Button btSend;
-    ListView lvChat;
+
     ArrayList<Message> mMessages;
     ChatListAdapter mAdapter;
     // Keep track of initial load to scroll to the bottom of the ListView
@@ -61,44 +59,52 @@ public class ChatMainActivity extends AppCompatActivity {
     Uri BmpFileName = null;
     AppUser appUser;
     Message message;
+    String klassId;
+    ProgressDialog mProgressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_main);
         AppUser appUser = UserManager.getCurrentUser();
-
         android.support.v7.app.ActionBar menu = getSupportActionBar();
         menu.setTitle(R.string.add_message);
         menu.setLogo(R.drawable.ic_back);
         menu.setDisplayHomeAsUpEnabled(true);
-
+        i = getIntent();
+        klassId = i.getStringExtra("klassId");
         // User login
         if (appUser!= null) { // start with existing user
             setupMessagePosting(appUser);
         } else { // If not logged in, login as a new anonymous user
             //login();
         }
-        Klass.findByObjectId("LGLI6ZDCFy", new GetCallback<Klass>() {
+        Klass.findByObjectId(klassId, new GetCallback<Klass>() {
             @Override
             public void done(Klass object, com.parse.ParseException e) {
                 klassObject = object;
-                Toast.makeText(ChatMainActivity.this, klassObject.getObjectId(), Toast.LENGTH_SHORT).show();
+
             }
         });
-        //get the class object from the intent
-        mHandler.postDelayed(mRefreshMessagesRunnable, POLL_INTERVAL);
+
+
     }
     // Setup button event handler which posts the entered message to Parse
     void setupMessagePosting(final AppUser user) {
+        mProgressDialog = new ProgressDialog(ChatMainActivity.this);
+        mProgressDialog.setTitle("Message posting ");
+        // Set your progress dialog Message
+        mProgressDialog.setMessage("Posting Message , Please Wait!");
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setMax(100);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        // Show progress dialog
+
         // Find the text field and button
         etText = (EditText) findViewById(R.id.etMessage);
         btSend = (Button) findViewById(R.id.btSend);
-        lvChat = (ListView) findViewById(R.id.lvChat);
         mMessages = new ArrayList<>();
-        lvChat.setTranscriptMode(1);
         mFirstLoad = true;
         mAdapter = new ChatListAdapter(ChatMainActivity.this, user.getUserId(), mMessages);
-        lvChat.setAdapter(mAdapter);
         cameraButton=(ImageButton)findViewById(R.id.ibCamera);
         cameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +119,6 @@ public class ChatMainActivity extends AppCompatActivity {
                 String data = etText.getText().toString();
                 ParseFile pFile = null ;
                 message = new Message();
-                String KEY_KLASS = "LGLI6ZDCFy";//remove this once intergratedw ith the class
                 message.setKlass(klassObject);
                 message.setUser(user);
                 message.setBody(data);
@@ -128,86 +133,43 @@ public class ChatMainActivity extends AppCompatActivity {
                     pFile = new ParseFile("Image.png", stream.toByteArray());
                     try
                     {
-                        pFile.saveInBackground();
-                        Toast.makeText(ChatMainActivity.this, "Image Saved file",
-                                Toast.LENGTH_SHORT).show();
+                        pFile.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException arg0) {
+                                mProgressDialog.dismiss();
+                            }
+                        }, new ProgressCallback() {
+                            @Override
+                            public void done(Integer percentDone) {
+                                Log.i("TAG", "Updating progress: " + percentDone);
+                                mProgressDialog.show();
+                                mProgressDialog.setProgress(percentDone);
+
+                            }
+                        });
                         message.setPhoto(pFile);
-                        message.save();
-                        Toast.makeText(ChatMainActivity.this, "Image Saved",
-                                Toast.LENGTH_SHORT).show();
+                        message.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                Toast.makeText(ChatMainActivity.this, "Successfully created message on Parse",
+                                        Toast.LENGTH_SHORT).show();
+                                ChatMainActivity.this.finish();
+                            }
+                        });
                     }
-                    catch (ParseException e)
+                    //catch (ParseException e)
+                    catch (Exception e)
                     {
                         // TODO Auto-generated catch block
                         Toast.makeText(ChatMainActivity.this, "Error in saving image",Toast.LENGTH_SHORT).show();
                         e.printStackTrace();
                     }
                 }
-                message.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        Toast.makeText(ChatMainActivity.this, "Successfully created message on Parse",
-                                Toast.LENGTH_SHORT).show();
 
-                    }
-                });
                 etText.setText(null);
             }
         });
     }
-
-    void refreshMessages() {
-        // Construct query to execute
-        ParseQuery<Message> query = ParseQuery.getQuery(Message.class);
-        // Configure limit and sort order
-        query.setLimit(MAX_CHAT_MESSAGES_TO_SHOW);
-        query.orderByAscending("createdAt");
-        String KEY_KLASS = "LGLI6ZDCFy";
-        // Execute query to fetch all messages from Parse asynchronously
-        // This is equivalent to a SELECT query with SQL
-        Klass.findByCode(KEY_KLASS, new FindCallback<Klass>() {
-            @Override
-            public void done(List<Klass> objects, ParseException e) {
-                if (e == null) {
-                    if (objects == null || objects.isEmpty()) {
-                        Toast.makeText(ChatMainActivity.this, "Unable to find Class. Please retry.", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
-                        // there should be only one class
-                        final Klass klass = objects.get(0);
-                        System.out.println("klass object"+klass.getProfileUrl()+"klass.getObjectID"+klass.getObjectId());
-                        Message.findAll(klass,new FindCallback<Message>() {
-                            public void done(List<Message> messages, ParseException e) {
-                                if (e == null) {
-                                    mMessages.clear();
-                                    mMessages.addAll(messages);
-                                    mAdapter.notifyDataSetChanged(); // update adapter
-                                    // Scroll to the bottom of the list on initial load
-                                    if (mFirstLoad) {
-                                        lvChat.setSelection(mAdapter.getCount() - 1);
-                                        mFirstLoad = false;
-                                    }
-                                } else {
-                                    Log.e("message", "Error Loading Messages" + e);
-                                }
-                            }
-                        });
-                    }
-                }
-                else {
-                    Toast.makeText(ChatMainActivity.this, "Unable to find Class. Please retry.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-    Runnable mRefreshMessagesRunnable = new Runnable() {
-        @Override
-        public void run() {
-            //refreshMessages();
-            //mHandler.postDelayed(this, POLL_INTERVAL);
-        }
-    };
     public void captureImage() {
         String storageState = Environment.getExternalStorageState();
         if (storageState.equals(Environment.MEDIA_MOUNTED)) {
@@ -217,7 +179,7 @@ public class ChatMainActivity extends AppCompatActivity {
                 if (photoFile.exists() == false) {
                     photoFile.getParentFile().mkdirs();
                     photoFile.createNewFile();
-                    Toast.makeText(ChatMainActivity.this,photoFile.getAbsolutePath(), Toast.LENGTH_SHORT).show();
+
                 }
             } catch (IOException e) {
                 Log.d("DocumentActivity", "Could not create file.", e);
@@ -229,17 +191,13 @@ public class ChatMainActivity extends AppCompatActivity {
             startActivityForResult(i, 0);
         }
     }
-
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             try {
                 bmp = MediaStore.Images.Media.getBitmap( this.getContentResolver(), BmpFileName);
-                Toast.makeText(ChatMainActivity.this,"onActivityResult", Toast.LENGTH_SHORT).show();
-
-
-            } catch (FileNotFoundException e) {
+                } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (IOException e) {
@@ -248,7 +206,6 @@ public class ChatMainActivity extends AppCompatActivity {
             }
         }
     }
-
     // onBackPressed is what is called when back is hit, call `overridePendingTransition`
     @Override
     public void onBackPressed() {
