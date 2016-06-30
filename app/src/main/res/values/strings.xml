@@ -26,4 +26,6 @@
     <string name="profile_me">My Profile Pic</string>
     <string name="profile_other">Other profile pic</string>
     <string name="add_message">New Message</string>
+    <string name="btnCancel">Cancel</string>
+    <string name="tweetHint">Post a message</string>
 </resources>

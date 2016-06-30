@@ -100,7 +100,7 @@ public class PTChatActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
-        overridePendingTransition(R.anim.left_in, R.anim.right_out);
+        overridePendingTransition(R.anim.right_in, R.anim.left_out);
     }
 
     @Override
@@ -109,7 +109,7 @@ public class PTChatActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
-                overridePendingTransition(R.anim.left_in, R.anim.right_out);
+                overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 return true;
 
             default:

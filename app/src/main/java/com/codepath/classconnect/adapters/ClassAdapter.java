@@ -6,9 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,7 +30,7 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
  */
 public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> {
         //ArrayAdapter<KlassRegistration> {
-    private final static int FADE_DURATION = 1000; // in milliseconds
+    private final static int FADE_DURATION = 10000; // in milliseconds
     Context m_context;
     // Store a member variable for the contacts
     private List<KlassRegistration> mClasses;
@@ -116,13 +118,16 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
                 Intent intent = new Intent(v.getContext(), cls);
                 intent.putExtra("klassId", klassId);
                 v.getContext().startActivity(intent);
+                setFadeAnimation(v);
             }
         });
     }
 
     private void setFadeAnimation(View view) {
-        AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+        AlphaAnimation anim = new AlphaAnimation(0.2f, 1.0f);
+        anim.setInterpolator(new DecelerateInterpolator());
         anim.setDuration(FADE_DURATION);
+        view.setAlpha(1f);
         view.startAnimation(anim);
     }
 
