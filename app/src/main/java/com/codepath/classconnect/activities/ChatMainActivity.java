@@ -125,7 +125,7 @@ public class ChatMainActivity extends AppCompatActivity {
                 // Ensure bmp has value
                 if (bmp == null || BmpFileName == null) {
                     Log.d ("Error" , "Problem with image");
-                    
+
                 }else{
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
@@ -161,8 +161,7 @@ public class ChatMainActivity extends AppCompatActivity {
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        Toast.makeText(ChatMainActivity.this, "Successfully created message on Parse",
-                                Toast.LENGTH_SHORT).show();
+
                         ChatMainActivity.this.finish();
                     }
                 });
