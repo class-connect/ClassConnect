@@ -161,7 +161,8 @@ public class ChatMainActivity extends AppCompatActivity {
                 message.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-
+                        Intent data = new Intent();
+                        ChatMainActivity.this.setResult(RESULT_OK, data);
                         ChatMainActivity.this.finish();
                     }
                 });

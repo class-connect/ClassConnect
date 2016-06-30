@@ -69,12 +69,7 @@ public class PTChatActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        /*if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-            //tweets = new ArrayList<Tweet>();
-            //aTweets = new TweetsArrayAdapter(TimelineActivity.this, tweets);
-            //lvTweets.setAdapter(aTweets);
-            populateTimeline(1);
-        }*/
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     // Menu icons are inflated just as they were with actionbar
